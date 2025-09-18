@@ -1,4 +1,5 @@
 // src/components/index.ts
 
-export { default as MyComponent } from './MyComponent';
-export { default as AnotherComponent } from './AnotherComponent';
+export { default as UIExample } from './UIExample';
+export { default as LoginButton } from './LoginButton';
+export { default as MapComponent } from './MapComponent';
