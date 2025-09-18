@@ -1,16 +1,24 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { View, StyleSheet } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import AppNavigator from './src/navigation/AppNavigator';
+import LoginButton from './src/components/LoginButton';
 
 const App = () => {
   return (
     <PaperProvider>
-      <NavigationContainer>
+      <View style={styles.container}>
         <AppNavigator />
-      </NavigationContainer>
+        <LoginButton />
+      </View>
     </PaperProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;

@@ -1,5 +1,6 @@
 export type RootStackParamList = {
   Home: undefined;
+  Profile: undefined;
   // 他のスクリーンがあればここに追加
 };
 
