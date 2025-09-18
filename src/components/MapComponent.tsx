@@ -4,11 +4,24 @@ import MapView, { Marker, Region } from 'react-native-maps';
 import { Card, Text, Button, FAB } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
+import MarkerListModal from './MarkerListModal';
+import ConfirmationModal from './ConfirmationModal';
 
 const { width, height } = Dimensions.get('window');
 
 interface MapComponentProps {
   initialRegion?: Region;
+}
+
+interface MarkerData {
+  id: string;
+  coordinate: {
+    latitude: number;
+    longitude: number;
+  };
+  title: string;
+  description: string;
+  timestamp: Date;
 }
 
 const MapComponent: React.FC<MapComponentProps> = ({ 
@@ -21,7 +34,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
 }) => {
   const [region, setRegion] = useState<Region>(initialRegion);
   const [currentLocation, setCurrentLocation] = useState<{latitude: number, longitude: number} | null>(null);
-  const [markers, setMarkers] = useState([
+  const [markers, setMarkers] = useState<MarkerData[]>([
     {
       id: '1',
       coordinate: {
@@ -30,8 +43,12 @@ const MapComponent: React.FC<MapComponentProps> = ({
       },
       title: '東京駅',
       description: '日本の首都の中心駅',
+      timestamp: new Date(),
     },
   ]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [confirmationVisible, setConfirmationVisible] = useState(false);
+  const [pendingCoordinate, setPendingCoordinate] = useState<{latitude: number, longitude: number} | null>(null);
 
   useEffect(() => {
     getCurrentLocation();
@@ -73,28 +90,82 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
   const handleMapPress = (event: any) => {
     const { coordinate } = event.nativeEvent;
-    const newMarker = {
-      id: Date.now().toString(),
-      coordinate,
-      title: 'カスタムマーカー',
-      description: `緯度: ${coordinate.latitude.toFixed(4)}, 経度: ${coordinate.longitude.toFixed(4)}`,
+    setPendingCoordinate(coordinate);
+    setConfirmationVisible(true);
+  };
+
+  const confirmAddMarker = () => {
+    if (pendingCoordinate) {
+      const newMarker: MarkerData = {
+        id: Date.now().toString(),
+        coordinate: pendingCoordinate,
+        title: 'カスタムマーカー',
+        description: `緯度: ${pendingCoordinate.latitude.toFixed(4)}, 経度: ${pendingCoordinate.longitude.toFixed(4)}`,
+        timestamp: new Date(),
+      };
+      setMarkers([...markers, newMarker]);
+    }
+    setConfirmationVisible(false);
+    setPendingCoordinate(null);
+  };
+
+  const cancelAddMarker = () => {
+    setConfirmationVisible(false);
+    setPendingCoordinate(null);
+  };
+
+  const moveToMarker = (markerCoordinate: {latitude: number, longitude: number}) => {
+    const newRegion = {
+      latitude: markerCoordinate.latitude,
+      longitude: markerCoordinate.longitude,
+      latitudeDelta: 0.005,
+      longitudeDelta: 0.005,
     };
-    setMarkers([...markers, newMarker]);
+    setRegion(newRegion);
+    setModalVisible(false);
+  };
+
+  const deleteMarker = (markerId: string) => {
+    if (markerId === '1') {
+      Alert.alert('削除できません', '東京駅のマーカーは削除できません。');
+      return;
+    }
+    setMarkers(markers.filter(marker => marker.id !== markerId));
   };
 
   const resetToTokyo = () => {
     setRegion(initialRegion);
-    setMarkers([
-      {
-        id: '1',
-        coordinate: {
-          latitude: 35.6762,
-          longitude: 139.6503,
+  };
+
+  const resetMarkers = () => {
+    Alert.alert(
+      'マーカーをリセット',
+      'すべてのカスタムマーカーを削除しますか？',
+      [
+        {
+          text: 'キャンセル',
+          style: 'cancel',
         },
-        title: '東京駅',
-        description: '日本の首都の中心駅',
-      },
-    ]);
+        {
+          text: 'リセット',
+          style: 'destructive',
+          onPress: () => {
+            setMarkers([
+              {
+                id: '1',
+                coordinate: {
+                  latitude: 35.6762,
+                  longitude: 139.6503,
+                },
+                title: '東京駅',
+                description: '日本の首都の中心駅',
+                timestamp: new Date(),
+              },
+            ]);
+          },
+        },
+      ]
+    );
   };
 
   return (
@@ -117,7 +188,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
           onRegionChangeComplete={setRegion}
           onPress={handleMapPress}
           showsUserLocation={true}
-          showsMyLocationButton={false} // デフォルトボタンを無効化
+          showsMyLocationButton={false}
           mapType="standard"
         >
           {markers.map((marker) => (
@@ -130,30 +201,60 @@ const MapComponent: React.FC<MapComponentProps> = ({
           ))}
         </MapView>
         
-        {/* マップ内の現在地ボタン */}
         <FAB
           icon={() => <Ionicons name="locate" size={20} color="white" />}
           style={styles.locationFab}
           onPress={moveToCurrentLocation}
           size="small"
         />
+
+        <FAB
+          icon={() => <Ionicons name="list" size={20} color="white" />}
+          style={styles.listFab}
+          onPress={() => setModalVisible(true)}
+          size="small"
+        />
       </View>
 
       <Card style={styles.controlCard}>
         <Card.Content>
-          <Button
-            mode="outlined"
-            onPress={resetToTokyo}
-            icon={() => <Ionicons name="refresh" size={20} color="#2196f3" />}
-            style={styles.resetButton}
-          >
-            東京駅に戻る
-          </Button>
-          <Text variant="bodySmall" style={styles.markerCount}>
-            マーカー数: {markers.length}
-          </Text>
+          <View style={styles.buttonRow}>
+            <Button
+              mode="outlined"
+              onPress={resetToTokyo}
+              icon={() => <Ionicons name="home" size={20} color="#2196f3" />}
+              style={styles.controlButton}
+            >
+              東京駅に戻る
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={resetMarkers}
+              icon={() => <Ionicons name="trash" size={20} color="#e74c3c" />}
+              style={styles.controlButton}
+              buttonColor="#fff"
+              textColor="#e74c3c"
+            >
+              マーカーリセット
+            </Button>
+          </View>
         </Card.Content>
       </Card>
+
+      <MarkerListModal
+        visible={modalVisible}
+        markers={markers}
+        onDismiss={() => setModalVisible(false)}
+        onMarkerPress={moveToMarker}
+        onDeleteMarker={deleteMarker}
+      />
+
+      <ConfirmationModal
+        visible={confirmationVisible}
+        coordinate={pendingCoordinate}
+        onConfirm={confirmAddMarker}
+        onCancel={cancelAddMarker}
+      />
     </View>
   );
 };
@@ -194,17 +295,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196f3',
     zIndex: 1000,
   },
+  listFab: {
+    position: 'absolute',
+    top: 16,
+    right: 70,
+    backgroundColor: '#4caf50',
+    zIndex: 1000,
+  },
   controlCard: {
     margin: 16,
     marginTop: 8,
     elevation: 4,
   },
-  resetButton: {
-    marginBottom: 8,
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
   },
-  markerCount: {
-    textAlign: 'center',
-    color: '#666',
+  controlButton: {
+    flex: 1,
   },
 });
 
