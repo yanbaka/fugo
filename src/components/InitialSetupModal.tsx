@@ -222,7 +222,7 @@ const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
           {/* ヘッダー */}
           <View style={styles.header}>
             <Text variant="headlineSmall" style={styles.title}>
-              初期設定
+              すれ違い設定
             </Text>
             <Text variant="bodySmall" style={styles.stepIndicator}>
               ステップ {currentStep} / 2

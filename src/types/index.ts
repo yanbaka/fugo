@@ -1,6 +1,8 @@
 export type RootStackParamList = {
   Home: undefined;
   Profile: undefined;
+  EncounterSettings: undefined;
+  EncounterHistory: undefined;
   // 他のスクリーンがあればここに追加
 };
 
@@ -32,4 +34,21 @@ export interface PostInfo {
 export interface UserPreferences {
   interests: InterestInfo;
   posts: PostInfo[];
+}
+
+export interface EncounterSettings {
+  isEnabled: boolean;
+  notificationEnabled: boolean;
+  shareRadius: number; // メートル単位
+  historyRetentionDays: number;
+}
+
+export interface EncounterHistoryItem {
+  id: string;
+  text: string;
+  categories: Category[];
+  encounterDateTime: Date;
+  location: string; // 地区名称
+  userId: string;
+  userName?: string;
 }
