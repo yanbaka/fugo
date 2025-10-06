@@ -6,14 +6,16 @@ import {
   Card, 
   Chip, 
   Divider,
-  List,
   FAB,
   Searchbar,
   Button,
   IconButton,
+  Surface,
 } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { EncounterHistoryItem, Category } from '../types';
+import { MOTHER2_COLORS, MOTHER2_STYLES } from '../styles/mother2Theme';
+import TileBackground from '../components/TileBackground';
 
 const EncounterHistoryScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -106,7 +108,6 @@ const EncounterHistoryScreen = () => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    // 実際のアプリでは、ここでAPIからデータを再取得
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -136,205 +137,265 @@ const EncounterHistoryScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* 検索バー */}
-      <View style={styles.searchContainer}>
-        <Searchbar
-          placeholder="すれ違い履歴を検索..."
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-          style={styles.searchBar}
-          inputStyle={styles.searchInput}
-        />
-      </View>
+    <View style={[MOTHER2_STYLES.container, styles.container]}>
+      {/* タイル状背景 */}
+      <TileBackground />
+      
+      <SafeAreaView style={styles.safeArea}>
+        {/* ヘッダー */}
+        <Surface style={[MOTHER2_STYLES.mainWindow, styles.headerSurface]} elevation={0}>
+          <Text style={[MOTHER2_STYLES.titleText, styles.headerTitle]}>すれちがい つうしん</Text>
+          <Text style={[MOTHER2_STYLES.subText, styles.headerSubtitle]}>～ れきし ～</Text>
+        </Surface>
 
-      {/* カテゴリフィルター */}
-      <View style={styles.filterContainer}>
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.categoryScroll}
-        >
-          <Chip
-            mode={selectedCategory === null ? 'flat' : 'outlined'}
-            selected={selectedCategory === null}
-            onPress={() => setSelectedCategory(null)}
-            style={styles.categoryChip}
-            textStyle={styles.categoryChipText}
-          >
-            すべて
-          </Chip>
-          {categories.map((category) => (
-            <Chip
-              key={category}
-              mode={selectedCategory === category ? 'flat' : 'outlined'}
-              selected={selectedCategory === category}
-              onPress={() => setSelectedCategory(category)}
-              style={styles.categoryChip}
-              textStyle={styles.categoryChipText}
-            >
-              {category}
-            </Chip>
-          ))}
-        </ScrollView>
-        
-        {(searchQuery || selectedCategory) && (
-          <IconButton
-            icon="close"
-            size={20}
-            onPress={clearAllFilters}
-            style={styles.clearButton}
+        {/* 検索バー */}
+        <Surface style={[MOTHER2_STYLES.mainWindow, styles.searchSurface]} elevation={0}>
+          <Searchbar
+            placeholder="なまえや ばしょで さがす..."
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+            style={[MOTHER2_STYLES.subWindow, styles.searchBar]}
+            inputStyle={styles.searchInput}
+            iconColor={MOTHER2_COLORS.iconColor}
+            placeholderTextColor={MOTHER2_COLORS.textLight}
           />
-        )}
-      </View>
+        </Surface>
 
-      {/* 履歴リスト */}
-      <ScrollView
-        style={styles.historyList}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        {filteredHistory.length === 0 ? (
-          <Card style={styles.emptyCard}>
-            <Card.Content>
-              <View style={styles.emptyState}>
-                <Ionicons name="people-outline" size={64} color="#ccc" />
-                <Text variant="titleMedium" style={styles.emptyTitle}>
-                  {searchQuery || selectedCategory ? '該当する履歴がありません' : 'すれ違い履歴がありません'}
-                </Text>
-                <Text variant="bodyMedium" style={styles.emptyDescription}>
-                  {searchQuery || selectedCategory 
-                    ? '検索条件を変更してみてください' 
-                    : 'すれ違い機能を有効にして外出してみましょう'}
-                </Text>
-                {(searchQuery || selectedCategory) && (
+        {/* カテゴリフィルター */}
+        <Surface style={[MOTHER2_STYLES.mainWindow, styles.filterSurface]} elevation={0}>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoryScroll}
+          >
+            <Surface style={[
+              MOTHER2_STYLES.button, 
+              styles.categoryChip, 
+              selectedCategory === null && styles.selectedChip
+            ]} elevation={0}>
+              <Button
+                mode="text"
+                onPress={() => setSelectedCategory(null)}
+                textColor={selectedCategory === null ? MOTHER2_COLORS.textAccent : MOTHER2_COLORS.textPrimary}
+                labelStyle={MOTHER2_STYLES.smallText}
+              >
+                すべて
+              </Button>
+            </Surface>
+            {categories.map((category) => (
+              <Surface 
+                key={category} 
+                style={[
+                  MOTHER2_STYLES.button, 
+                  styles.categoryChip, 
+                  selectedCategory === category && styles.selectedChip
+                ]} 
+                elevation={0}
+              >
+                <Button
+                  mode="text"
+                  onPress={() => setSelectedCategory(category)}
+                  textColor={selectedCategory === category ? MOTHER2_COLORS.textAccent : MOTHER2_COLORS.textPrimary}
+                  labelStyle={MOTHER2_STYLES.smallText}
+                >
+                  {category}
+                </Button>
+              </Surface>
+            ))}
+          </ScrollView>
+          
+          {(searchQuery || selectedCategory) && (
+            <Surface style={[MOTHER2_STYLES.accentButton, styles.clearButtonSurface]} elevation={0}>
+              <IconButton
+                icon="close"
+                size={16}
+                iconColor={MOTHER2_COLORS.iconColor}
+                onPress={clearAllFilters}
+              />
+            </Surface>
+          )}
+        </Surface>
+
+        {/* 履歴リスト */}
+        <ScrollView
+          style={styles.historyList}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          {filteredHistory.length === 0 ? (
+            <Surface style={[MOTHER2_STYLES.textBox, styles.emptyMessageBox]} elevation={0}>
+              <Text style={[MOTHER2_STYLES.titleText, styles.emptyMessageTitle]}>
+                {searchQuery || selectedCategory ? 'みつからなかった...' : 'まだ だれとも すれちがって いない'}
+              </Text>
+              <Text style={[MOTHER2_STYLES.subText, styles.emptyMessageText]}>
+                {searchQuery || selectedCategory 
+                  ? 'べつの じょうけんで さがしてみよう' 
+                  : 'そとに でかけて みよう！'}
+              </Text>
+              {(searchQuery || selectedCategory) && (
+                <Surface style={MOTHER2_STYLES.accentButton} elevation={0}>
                   <Button
-                    mode="outlined"
+                    mode="text"
                     onPress={clearAllFilters}
-                    style={styles.clearFiltersButton}
+                    textColor={MOTHER2_COLORS.textAccent}
+                    labelStyle={MOTHER2_STYLES.smallText}
                   >
-                    フィルターをクリア
+                    じょうけんを クリア
                   </Button>
-                )}
-              </View>
-            </Card.Content>
-          </Card>
-        ) : (
-          <>
-            <Text variant="bodySmall" style={styles.resultCount}>
-              {filteredHistory.length}件のすれ違い履歴
-            </Text>
-            
-            {filteredHistory.map((item) => (
-              <Card key={item.id} style={styles.historyCard}>
-                <Card.Content>
+                </Surface>
+              )}
+            </Surface>
+          ) : (
+            <>
+              <Surface style={[MOTHER2_STYLES.accentButton, styles.resultCountSurface]} elevation={0}>
+                <Text style={[MOTHER2_STYLES.accentText, styles.resultCountText]}>
+                  {filteredHistory.length}けんの きろく が みつかった
+                </Text>
+              </Surface>
+              
+              {filteredHistory.map((item) => (
+                <Surface key={item.id} style={[MOTHER2_STYLES.textBox, styles.historyMessageBox]} elevation={0}>
                   {/* ユーザー情報と日時 */}
-                  <View style={styles.cardHeader}>
+                  <View style={styles.messageHeader}>
                     <View style={styles.userInfo}>
-                      <Text variant="titleSmall" style={styles.userName}>
+                      <Text style={[MOTHER2_STYLES.accentText, styles.userName]}>
                         {item.userName || `ユーザー${item.userId}`}
                       </Text>
-                      <Text variant="bodySmall" style={styles.location}>
+                      <Text style={[MOTHER2_STYLES.subText, styles.location]}>
                         📍 {item.location}
                       </Text>
                     </View>
-                    <Text variant="bodySmall" style={styles.dateTime}>
+                    <Text style={[MOTHER2_STYLES.smallText, styles.dateTime]}>
                       {formatDateTime(item.encounterDateTime)}
                     </Text>
                   </View>
 
-                  <Divider style={styles.cardDivider} />
+                  <View style={styles.messageDivider} />
 
                   {/* 投稿内容 */}
-                  <Text variant="bodyMedium" style={styles.postText}>
+                  <Text style={[MOTHER2_STYLES.mainText, styles.messageText]}>
                     {item.text}
                   </Text>
 
                   {/* カテゴリ */}
-                  <View style={styles.chipContainer}>
+                  <View style={styles.categoryTagContainer}>
                     {item.categories.map((category) => (
-                      <Chip
-                        key={category}
-                        mode="flat"
-                        style={styles.postChip}
-                        textStyle={styles.postChipText}
-                        onPress={() => setSelectedCategory(category)}
-                      >
-                        {category}
-                      </Chip>
+                      <Surface key={category} style={[MOTHER2_STYLES.tag, styles.categoryTag]} elevation={0}>
+                        <Button
+                          mode="text"
+                          onPress={() => setSelectedCategory(category)}
+                          textColor={MOTHER2_COLORS.textAccent}
+                          labelStyle={MOTHER2_STYLES.smallText}
+                        >
+                          {category}
+                        </Button>
+                      </Surface>
                     ))}
                   </View>
-                </Card.Content>
-              </Card>
-            ))}
-          </>
-        )}
-      </ScrollView>
+                </Surface>
+              ))}
+            </>
+          )}
+        </ScrollView>
 
-      {/* マップ表示FAB */}
-      <FAB
-        icon={() => <Ionicons name="map" size={20} color="white" />}
-        style={styles.mapFab}
-        onPress={() => console.log('マップ表示')}
-        label="マップ"
-      />
-    </SafeAreaView>
+        {/* FAB */}
+        <Surface style={[MOTHER2_STYLES.accentButton, styles.mapFabSurface]} elevation={0}>
+          <Button
+            mode="text"
+            onPress={() => console.log('マップ表示')}
+            textColor={MOTHER2_COLORS.textAccent}
+            labelStyle={MOTHER2_STYLES.smallText}
+            icon={() => <Ionicons name="map" size={16} color={MOTHER2_COLORS.textAccent} />}
+          >
+            マップ
+          </Button>
+        </Surface>
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  // 基本レイアウト
   container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
+    // MOTHER2_STYLES.containerを継承
   },
-  searchContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
+  safeArea: {
+    flex: 1,
+  },
+  
+  // ヘッダー関連
+  headerSurface: {
+    // MOTHER2_STYLES.mainWindowを継承
+  },
+  headerTitle: {
+    // MOTHER2_STYLES.titleTextを継承
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 4,
+  },
+  
+  // 検索関連
+  searchSurface: {
+    marginTop: 0,
   },
   searchBar: {
-    elevation: 2,
-    backgroundColor: 'white',
+    // MOTHER2_STYLES.subWindowを継承
   },
   searchInput: {
     fontSize: 14,
+    color: MOTHER2_COLORS.textPrimary,
   },
-  filterContainer: {
+  
+  // フィルター関連
+  filterSurface: {
+    marginTop: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 16,
-    paddingBottom: 8,
   },
   categoryScroll: {
-    paddingRight: 16,
+    paddingRight: 8,
   },
   categoryChip: {
-    marginRight: 8,
-    backgroundColor: 'white',
+    marginRight: 6,
+    minHeight: 36,
+    justifyContent: 'center',
   },
-  categoryChipText: {
-    fontSize: 12,
+  selectedChip: {
+    backgroundColor: MOTHER2_COLORS.warmBeige,
+    borderColor: MOTHER2_COLORS.darkBeige,
   },
-  clearButton: {
+  clearButtonSurface: {
     marginLeft: 'auto',
-    marginRight: 8,
+    minWidth: 40,
+    minHeight: 40,
   },
+  
+  // リスト関連
   historyList: {
     flex: 1,
+    paddingHorizontal: 8,
   },
-  resultCount: {
+  resultCountSurface: {
+    margin: 4,
+    minHeight: 36,
+    justifyContent: 'center',
+  },
+  resultCountText: {
     textAlign: 'center',
-    color: '#666',
-    marginVertical: 8,
+    fontSize: 12,
+    fontWeight: 'bold',
   },
-  historyCard: {
-    margin: 16,
-    marginBottom: 8,
-    elevation: 3,
+  
+  // メッセージボックス関連
+  historyMessageBox: {
+    margin: 4,
   },
-  cardHeader: {
+  messageHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -346,62 +407,57 @@ const styles = StyleSheet.create({
   userName: {
     fontWeight: 'bold',
     marginBottom: 2,
-    color: '#333',
+    fontSize: 16,
   },
   location: {
-    color: '#666',
+    fontSize: 12,
   },
   dateTime: {
-    color: '#999',
     textAlign: 'right',
+    fontSize: 10,
   },
-  cardDivider: {
+  messageDivider: {
+    height: 1,
+    backgroundColor: MOTHER2_COLORS.mediumBeige,
     marginVertical: 8,
   },
-  postText: {
-    lineHeight: 20,
+  messageText: {
     marginBottom: 12,
   },
-  chipContainer: {
+  categoryTagContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  postChip: {
-    margin: 2,
-    backgroundColor: '#e8f5e8',
-    height: 28,
+  categoryTag: {
+    minHeight: 28,
+    justifyContent: 'center',
   },
-  postChipText: {
-    fontSize: 10,
-    color: '#2e7d32',
-  },
-  emptyCard: {
-    margin: 16,
-    elevation: 2,
-  },
-  emptyState: {
+  
+  // 空状態
+  emptyMessageBox: {
+    margin: 8,
+    padding: 20,
     alignItems: 'center',
-    paddingVertical: 40,
   },
-  emptyTitle: {
-    marginTop: 16,
-    marginBottom: 8,
-    textAlign: 'center',
+  emptyMessageTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
-  },
-  emptyDescription: {
     textAlign: 'center',
-    color: '#666',
+    marginBottom: 8,
+  },
+  emptyMessageText: {
+    fontSize: 14,
+    textAlign: 'center',
     marginBottom: 16,
   },
-  clearFiltersButton: {
-    marginTop: 8,
-  },
-  mapFab: {
+  
+  // FAB
+  mapFabSurface: {
     position: 'absolute',
     bottom: 16,
     right: 16,
-    backgroundColor: '#2196f3',
+    minHeight: 48,
+    justifyContent: 'center',
   },
 });
 
