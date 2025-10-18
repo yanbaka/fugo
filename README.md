@@ -9,17 +9,20 @@
 ## セットアップ手順
 
 1. **リポジトリのクローン**
+
    ```bash
    git clone <repository-url>
    cd my-expo-app
    ```
 
 2. **依存関係のインストール**
+
    ```bash
    npm install
    ```
 
 3. **アプリの起動**
+
    ```bash
    npm start
    ```

@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { 
-  Text, 
-  Card, 
-  Button, 
-  Switch, 
-  Divider, 
+import {
+  Text,
+  Card,
+  Button,
+  Switch,
+  Divider,
   List,
   IconButton,
   Chip,
@@ -20,35 +20,38 @@ const EncounterSettingsScreen = () => {
   const [notificationEnabled, setNotificationEnabled] = useState(true);
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [userPreferences, setUserPreferences] = useState<UserPreferences>({
-    interests: { 
-      categories: ['旅行', 'グルメ・料理'] 
+    interests: {
+      categories: ['旅行', 'グルメ・料理'],
     },
     posts: [
       {
         id: '1',
         text: '美味しいカフェを探しています！',
-        categories: ['グルメ・料理']
+        categories: ['グルメ・料理'],
       },
       {
-        id: '2', 
+        id: '2',
         text: '週末の旅行先を相談したいです',
-        categories: ['旅行']
-      }
-    ]
+        categories: ['旅行'],
+      },
+    ],
   });
 
-  const handlePreferencesUpdate = useCallback((preferences: UserPreferences) => {
-    console.log('設定更新:', preferences);
-    setUserPreferences(preferences);
-    setShowSetupModal(false);
-  }, []);
+  const handlePreferencesUpdate = useCallback(
+    (preferences: UserPreferences) => {
+      console.log('設定更新:', preferences);
+      setUserPreferences(preferences);
+      setShowSetupModal(false);
+    },
+    []
+  );
 
   const toggleEncounter = useCallback(() => {
-    setIsEncounterEnabled(prev => !prev);
+    setIsEncounterEnabled((prev) => !prev);
   }, []);
 
   const toggleNotification = useCallback(() => {
-    setNotificationEnabled(prev => !prev);
+    setNotificationEnabled((prev) => !prev);
   }, []);
 
   const openSetupModal = useCallback(() => {
@@ -65,7 +68,7 @@ const EncounterSettingsScreen = () => {
               すれ違い機能
             </Text>
             <Divider style={styles.divider} />
-            
+
             <List.Item
               title="すれ違い機能を有効にする"
               description="近くにいる人との情報交換を可能にします"
@@ -79,7 +82,7 @@ const EncounterSettingsScreen = () => {
                 />
               )}
             />
-            
+
             <List.Item
               title="すれ違い通知"
               description="新しいすれ違いがあった時に通知します"
@@ -104,14 +107,10 @@ const EncounterSettingsScreen = () => {
               <Text variant="titleMedium" style={styles.sectionTitle}>
                 あなたの興味・関心
               </Text>
-              <IconButton
-                icon="pencil"
-                size={20}
-                onPress={openSetupModal}
-              />
+              <IconButton icon="pencil" size={20} onPress={openSetupModal} />
             </View>
             <Divider style={styles.divider} />
-            
+
             <View style={styles.chipContainer}>
               {userPreferences.interests.categories.map((category) => (
                 <Chip
@@ -134,14 +133,10 @@ const EncounterSettingsScreen = () => {
               <Text variant="titleMedium" style={styles.sectionTitle}>
                 発信したい情報
               </Text>
-              <IconButton
-                icon="pencil"
-                size={20}
-                onPress={openSetupModal}
-              />
+              <IconButton icon="pencil" size={20} onPress={openSetupModal} />
             </View>
             <Divider style={styles.divider} />
-            
+
             {userPreferences.posts.length > 0 ? (
               userPreferences.posts.map((post, index) => (
                 <Card key={post.id} style={styles.postCard}>
@@ -182,40 +177,34 @@ const EncounterSettingsScreen = () => {
               プライバシー設定
             </Text>
             <Divider style={styles.divider} />
-            
+
             <List.Item
               title="すれ違い履歴を確認"
               description="過去のすれ違い記録を表示します"
               left={(props) => (
                 <List.Icon {...props} icon="history" color="#2196f3" />
               )}
-              right={(props) => (
-                <IconButton {...props} icon="chevron-right" />
-              )}
+              right={(props) => <IconButton {...props} icon="chevron-right" />}
               onPress={() => console.log('すれ違い履歴画面へ遷移')}
             />
-            
+
             <List.Item
               title="位置情報の共有範囲"
               description="100m以内"
               left={(props) => (
                 <List.Icon {...props} icon="map-marker" color="#4caf50" />
               )}
-              right={(props) => (
-                <IconButton {...props} icon="chevron-right" />
-              )}
+              right={(props) => <IconButton {...props} icon="chevron-right" />}
               onPress={() => console.log('位置情報設定')}
             />
-            
+
             <List.Item
               title="すれ違い履歴の保存期間"
               description="30日間"
               left={(props) => (
                 <List.Icon {...props} icon="clock" color="#9c27b0" />
               )}
-              right={(props) => (
-                <IconButton {...props} icon="chevron-right" />
-              )}
+              right={(props) => <IconButton {...props} icon="chevron-right" />}
               onPress={() => console.log('履歴設定')}
             />
           </Card.Content>

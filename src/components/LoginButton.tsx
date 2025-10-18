@@ -8,7 +8,7 @@ const LoginButton = () => {
 
   const handleLogin = () => {
     console.log('ログインボタンが押されました');
-    
+
     if (isLoggedIn) {
       // ログアウト処理
       setIsLoggedIn(false);
@@ -25,9 +25,9 @@ const LoginButton = () => {
   return (
     <FAB
       icon={() => (
-        <Ionicons 
-          name={isLoggedIn ? "log-out-outline" : "log-in-outline"} 
-          size={16} 
+        <Ionicons
+          name={isLoggedIn ? 'log-out-outline' : 'log-in-outline'}
+          size={16}
           color="#666"
         />
       )}
@@ -36,7 +36,7 @@ const LoginButton = () => {
       mode="flat"
       size="small"
       customSize={36}
-      label={isLoggedIn ? "ログアウト" : "ログイン"}
+      label={isLoggedIn ? 'ログアウト' : 'ログイン'}
     />
   );
 };

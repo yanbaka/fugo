@@ -19,7 +19,13 @@ export interface Post {
   author: User;
 }
 
-export type Category = '旅行' | 'グルメ・料理' | 'ファッション' | '映画' | '音楽' | 'アニメ・漫画';
+export type Category =
+  | '旅行'
+  | 'グルメ・料理'
+  | 'ファッション'
+  | '映画'
+  | '音楽'
+  | 'アニメ・漫画';
 
 export interface InterestInfo {
   categories: Category[];

@@ -9,29 +9,29 @@ import EncounterHistoryScreen from '../screens/EncounterHistoryScreen';
 const AppNavigator = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { 
-      key: 'home', 
-      title: 'ホーム', 
+    {
+      key: 'home',
+      title: 'ホーム',
       focusedIcon: () => <Ionicons name="home" size={24} />,
-      unfocusedIcon: () => <Ionicons name="home-outline" size={24} />
+      unfocusedIcon: () => <Ionicons name="home-outline" size={24} />,
     },
-    { 
-      key: 'history', 
-      title: 'すれ違い履歴', 
+    {
+      key: 'history',
+      title: 'すれ違い履歴',
       focusedIcon: () => <Ionicons name="time" size={24} />,
-      unfocusedIcon: () => <Ionicons name="time-outline" size={24} />
+      unfocusedIcon: () => <Ionicons name="time-outline" size={24} />,
     },
-    { 
-      key: 'encounter', 
-      title: 'すれ違い設定', 
+    {
+      key: 'encounter',
+      title: 'すれ違い設定',
       focusedIcon: () => <Ionicons name="people" size={24} />,
-      unfocusedIcon: () => <Ionicons name="people-outline" size={24} />
+      unfocusedIcon: () => <Ionicons name="people-outline" size={24} />,
     },
-    { 
-      key: 'profile', 
-      title: 'プロフィール', 
+    {
+      key: 'profile',
+      title: 'プロフィール',
       focusedIcon: () => <Ionicons name="person" size={24} />,
-      unfocusedIcon: () => <Ionicons name="person-outline" size={24} />
+      unfocusedIcon: () => <Ionicons name="person-outline" size={24} />,
     },
   ]);
 

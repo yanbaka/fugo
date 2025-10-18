@@ -9,7 +9,7 @@ const UIExample = () => {
       <Appbar.Header>
         <Appbar.Content title="My App" />
       </Appbar.Header>
-      
+
       <ScrollView style={styles.content}>
         <Card style={styles.card}>
           <Card.Content>
@@ -18,9 +18,10 @@ const UIExample = () => {
             </Text>
             <Divider style={styles.divider} />
             <Text variant="bodyMedium" style={styles.text}>
-              React Native PaperとExpo Vector Iconsを使用したUIコンポーネントです。
+              React Native PaperとExpo Vector
+              Iconsを使用したUIコンポーネントです。
             </Text>
-            
+
             <Button
               mode="contained"
               onPress={() => console.log('ボタンが押されました')}
@@ -39,7 +40,7 @@ const UIExample = () => {
               その他のコンポーネント
             </Text>
             <Divider style={styles.divider} />
-            
+
             <Button
               mode="outlined"
               onPress={() => console.log('アウトラインボタン')}

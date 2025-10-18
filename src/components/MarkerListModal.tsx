@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { 
-  Portal, 
-  Modal, 
-  List, 
-  Divider, 
+import {
+  Portal,
+  Modal,
+  List,
+  Divider,
   IconButton,
   Text,
-  Surface 
+  Surface,
 } from 'react-native-paper';
 
 interface MarkerData {
@@ -63,17 +63,16 @@ const MarkerListModal: React.FC<MarkerListModalProps> = ({
                 {markers.length}個のマーカー
               </Text>
             </View>
-            <IconButton
-              icon="close"
-              onPress={onDismiss}
-              size={24}
-            />
+            <IconButton icon="close" onPress={onDismiss} size={24} />
           </View>
 
           <Divider />
 
           {/* マーカー一覧 */}
-          <ScrollView style={styles.markerList} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={styles.markerList}
+            showsVerticalScrollIndicator={false}
+          >
             {markers.length === 0 ? (
               <View style={styles.emptyState}>
                 <Text variant="bodyMedium" style={styles.emptyText}>

@@ -15,7 +15,8 @@ const HomeScreen = () => {
             </Text>
             <Divider style={styles.divider} />
             <Text variant="bodyMedium" style={styles.welcomeText}>
-              Google マップが統合されたホーム画面です。マップをタップしてマーカーを追加できます。
+              Google
+              マップが統合されたホーム画面です。マップをタップしてマーカーを追加できます。
             </Text>
           </Card.Content>
         </Card>

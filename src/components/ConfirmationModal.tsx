@@ -29,7 +29,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             </Text>
             {coordinate && (
               <Text variant="bodyMedium" style={styles.coordinates}>
-                緯度: {coordinate.latitude.toFixed(4)}{'\n'}
+                緯度: {coordinate.latitude.toFixed(4)}
+                {'\n'}
                 経度: {coordinate.longitude.toFixed(4)}
               </Text>
             )}

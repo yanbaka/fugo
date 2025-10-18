@@ -24,16 +24,19 @@ interface MarkerData {
   timestamp: Date;
 }
 
-const MapComponent: React.FC<MapComponentProps> = ({ 
+const MapComponent: React.FC<MapComponentProps> = ({
   initialRegion = {
     latitude: 35.6762,
     longitude: 139.6503,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
-  }
+  },
 }) => {
   const [region, setRegion] = useState<Region>(initialRegion);
-  const [currentLocation, setCurrentLocation] = useState<{latitude: number, longitude: number} | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
   const [markers, setMarkers] = useState<MarkerData[]>([
     {
       id: '1',
@@ -48,7 +51,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
   ]);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
-  const [pendingCoordinate, setPendingCoordinate] = useState<{latitude: number, longitude: number} | null>(null);
+  const [pendingCoordinate, setPendingCoordinate] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
 
   useEffect(() => {
     getCurrentLocation();
@@ -58,7 +64,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert('位置情報の許可が必要です', '現在地を表示するには位置情報の許可が必要です。');
+        Alert.alert(
+          '位置情報の許可が必要です',
+          '現在地を表示するには位置情報の許可が必要です。'
+        );
         return;
       }
 
@@ -114,7 +123,10 @@ const MapComponent: React.FC<MapComponentProps> = ({
     setPendingCoordinate(null);
   };
 
-  const moveToMarker = (markerCoordinate: {latitude: number, longitude: number}) => {
+  const moveToMarker = (markerCoordinate: {
+    latitude: number;
+    longitude: number;
+  }) => {
     const newRegion = {
       latitude: markerCoordinate.latitude,
       longitude: markerCoordinate.longitude,
@@ -130,7 +142,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
       Alert.alert('削除できません', '東京駅のマーカーは削除できません。');
       return;
     }
-    setMarkers(markers.filter(marker => marker.id !== markerId));
+    setMarkers(markers.filter((marker) => marker.id !== markerId));
   };
 
   const resetToTokyo = () => {
@@ -200,7 +212,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
             />
           ))}
         </MapView>
-        
+
         <FAB
           icon={() => <Ionicons name="locate" size={20} color="white" />}
           style={styles.locationFab}

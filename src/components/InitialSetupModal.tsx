@@ -24,11 +24,11 @@ interface InitialSetupModalProps {
 
 const CATEGORIES: Category[] = [
   '旅行',
-  'グルメ・料理', 
+  'グルメ・料理',
   'ファッション',
   '映画',
   '音楽',
-  'アニメ・漫画'
+  'アニメ・漫画',
 ];
 
 const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
@@ -44,32 +44,35 @@ const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
   ]);
 
   const toggleInterestCategory = useCallback((category: Category) => {
-    setInterestCategories(prev =>
+    setInterestCategories((prev) =>
       prev.includes(category)
-        ? prev.filter(c => c !== category)
+        ? prev.filter((c) => c !== category)
         : [...prev, category]
     );
   }, []);
 
-  const togglePostCategory = useCallback((postId: string, category: Category) => {
-    setPosts(prev =>
-      prev.map(post =>
-        post.id === postId
-          ? {
-              ...post,
-              categories: post.categories.includes(category)
-                ? post.categories.filter(c => c !== category)
-                : [...post.categories, category]
-            }
-          : post
-      )
-    );
-  }, []);
+  const togglePostCategory = useCallback(
+    (postId: string, category: Category) => {
+      setPosts((prev) =>
+        prev.map((post) =>
+          post.id === postId
+            ? {
+                ...post,
+                categories: post.categories.includes(category)
+                  ? post.categories.filter((c) => c !== category)
+                  : [...post.categories, category],
+              }
+            : post
+        )
+      );
+    },
+    []
+  );
 
   // updatePostText関数を安定化
   const updatePostText = useCallback((postId: string, text: string) => {
-    setPosts(prev => {
-      return prev.map(post => {
+    setPosts((prev) => {
+      return prev.map((post) => {
         if (post.id === postId) {
           return { ...post, text };
         }
@@ -80,17 +83,17 @@ const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
 
   const addNewPost = useCallback(() => {
     const newId = (posts.length + 1).toString();
-    setPosts(prev => [
-      ...prev,
-      { id: newId, text: '', categories: [] }
-    ]);
+    setPosts((prev) => [...prev, { id: newId, text: '', categories: [] }]);
   }, [posts.length]);
 
-  const removePost = useCallback((postId: string) => {
-    if (posts.length > 1) {
-      setPosts(prev => prev.filter(post => post.id !== postId));
-    }
-  }, [posts.length]);
+  const removePost = useCallback(
+    (postId: string) => {
+      if (posts.length > 1) {
+        setPosts((prev) => prev.filter((post) => post.id !== postId));
+      }
+    },
+    [posts.length]
+  );
 
   const handleNext = useCallback(() => {
     if (currentStep === 1) {
@@ -101,7 +104,7 @@ const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
   const handleComplete = useCallback(() => {
     const preferences: UserPreferences = {
       interests: { categories: interestCategories },
-      posts: posts.filter(post => post.text.trim() !== '')
+      posts: posts.filter((post) => post.text.trim() !== ''),
     };
     onComplete(preferences);
   }, [interestCategories, posts, onComplete]);
@@ -115,62 +118,61 @@ const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
   const isStep2Valid = true;
 
   // PostItem コンポーネントをメモ化
-  const PostItem = useCallback(({ post, index }: { post: PostInfo; index: number }) => (
-    <Card key={post.id} style={styles.postCard}>
-      <Card.Content>
-        <View style={styles.postHeader}>
-          <Text variant="titleSmall">
-            投稿 {index + 1}
-          </Text>
-          {posts.length > 1 && (
-            <IconButton
-              icon="close"
-              size={20}
-              onPress={() => removePost(post.id)}
-            />
-          )}
-        </View>
-
-        <TextInput
-          key={`textinput-${post.id}`}
-          label="発信したい内容（任意）"
-          // value={post.text}
-          onChangeText={(text) => updatePostText(post.id, text)}
-          multiline
-          numberOfLines={3}
-          style={styles.textInput}
-          mode="outlined"
-          blurOnSubmit={false}
-          returnKeyType="done"
-        />
-
-        <Text variant="bodySmall" style={styles.categoryLabel}>
-          関連カテゴリ:
-        </Text>
-        <View style={styles.categoryContainer}>
-          {CATEGORIES.map((category) => (
-            <View key={category} style={styles.checkboxItem}>
-              <Checkbox
-                status={
-                  post.categories.includes(category)
-                    ? 'checked'
-                    : 'unchecked'
-                }
-                onPress={() => togglePostCategory(post.id, category)}
+  const PostItem = useCallback(
+    ({ post, index }: { post: PostInfo; index: number }) => (
+      <Card key={post.id} style={styles.postCard}>
+        <Card.Content>
+          <View style={styles.postHeader}>
+            <Text variant="titleSmall">投稿 {index + 1}</Text>
+            {posts.length > 1 && (
+              <IconButton
+                icon="close"
+                size={20}
+                onPress={() => removePost(post.id)}
               />
-              <Text
-                variant="bodySmall"
-                style={styles.checkboxLabel}
-                onPress={() => togglePostCategory(post.id, category)}
-              >
-                {category}
-              </Text>
-            </View>
-          ))}
-        </View>
-      </Card.Content>
-    </Card>
-  ), [posts.length, updatePostText, removePost, togglePostCategory]);
+            )}
+          </View>
+
+          <TextInput
+            key={`textinput-${post.id}`}
+            label="発信したい内容（任意）"
+            // value={post.text}
+            onChangeText={(text) => updatePostText(post.id, text)}
+            multiline
+            numberOfLines={3}
+            style={styles.textInput}
+            mode="outlined"
+            blurOnSubmit={false}
+            returnKeyType="done"
+          />
+
+          <Text variant="bodySmall" style={styles.categoryLabel}>
+            関連カテゴリ:
+          </Text>
+          <View style={styles.categoryContainer}>
+            {CATEGORIES.map((category) => (
+              <View key={category} style={styles.checkboxItem}>
+                <Checkbox
+                  status={
+                    post.categories.includes(category) ? 'checked' : 'unchecked'
+                  }
+                  onPress={() => togglePostCategory(post.id, category)}
+                />
+                <Text
+                  variant="bodySmall"
+                  style={styles.checkboxLabel}
+                  onPress={() => togglePostCategory(post.id, category)}
+                >
+                  {category}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </Card.Content>
+      </Card>
+    ),
+    [posts.length, updatePostText, removePost, togglePostCategory]
+  );
 
   // フッターボタンコンポーネントをメモ化
   const FooterButtons = useMemo(() => {
@@ -232,8 +234,8 @@ const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
           <Divider />
 
           {/* コンテンツ部分 */}
-          <ScrollView 
-            style={styles.scrollContainer} 
+          <ScrollView
+            style={styles.scrollContainer}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
             keyboardShouldPersistTaps="handled"
@@ -298,9 +300,7 @@ const InitialSetupModal: React.FC<InitialSetupModalProps> = ({
 
           {/* フッター */}
           <Divider />
-          <View style={styles.footer}>
-            {FooterButtons}
-          </View>
+          <View style={styles.footer}>{FooterButtons}</View>
         </Surface>
       </Modal>
     </Portal>

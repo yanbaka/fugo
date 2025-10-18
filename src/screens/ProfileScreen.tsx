@@ -26,11 +26,13 @@ const ProfileScreen = () => {
               アカウント設定
             </Text>
             <Divider style={styles.divider} />
-            
+
             <Button
               mode="outlined"
               onPress={() => console.log('プロフィール編集')}
-              icon={() => <Ionicons name="person-outline" size={20} color="#666" />}
+              icon={() => (
+                <Ionicons name="person-outline" size={20} color="#666" />
+              )}
               style={styles.menuButton}
             >
               プロフィール編集
@@ -39,7 +41,9 @@ const ProfileScreen = () => {
             <Button
               mode="outlined"
               onPress={() => console.log('設定')}
-              icon={() => <Ionicons name="settings-outline" size={20} color="#666" />}
+              icon={() => (
+                <Ionicons name="settings-outline" size={20} color="#666" />
+              )}
               style={styles.menuButton}
             >
               設定
@@ -48,7 +52,9 @@ const ProfileScreen = () => {
             <Button
               mode="outlined"
               onPress={() => console.log('ヘルプ')}
-              icon={() => <Ionicons name="help-circle-outline" size={20} color="#666" />}
+              icon={() => (
+                <Ionicons name="help-circle-outline" size={20} color="#666" />
+              )}
               style={styles.menuButton}
             >
               ヘルプ
@@ -61,7 +67,9 @@ const ProfileScreen = () => {
             <Button
               mode="contained"
               onPress={() => console.log('ログアウト')}
-              icon={() => <Ionicons name="log-out-outline" size={20} color="white" />}
+              icon={() => (
+                <Ionicons name="log-out-outline" size={20} color="white" />
+              )}
               buttonColor="#e74c3c"
             >
               ログアウト

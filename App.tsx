@@ -8,7 +8,8 @@ import { UserPreferences } from './src/types';
 
 const App = () => {
   const [showSetupModal, setShowSetupModal] = useState(true);
-  const [userPreferences, setUserPreferences] = useState<UserPreferences | null>(null);
+  const [userPreferences, setUserPreferences] =
+    useState<UserPreferences | null>(null);
 
   const handleSetupComplete = (preferences: UserPreferences) => {
     console.log('設定完了:', preferences);
@@ -21,7 +22,7 @@ const App = () => {
       <View style={styles.container}>
         <AppNavigator />
         <LoginButton />
-        
+
         <InitialSetupModal
           visible={showSetupModal}
           onComplete={handleSetupComplete}
