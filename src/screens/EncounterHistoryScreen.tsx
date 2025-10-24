@@ -239,7 +239,7 @@ const EncounterHistoryScreen = () => {
               <IconButton
                 icon="close"
                 size={16}
-                iconColor={COLORS.iconColor}
+                iconColor={COLORS.white}
                 onPress={clearAllFilters}
               />
             </Surface>
@@ -416,13 +416,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   selectedChip: {
-    backgroundColor: COLORS.mablsAccent,
-    borderColor: COLORS.mablsPurple,
+    backgroundColor: COLORS.mablsPink,
+    borderColor: COLORS.mablsPink,
   },
   clearButtonSurface: {
     marginLeft: 'auto',
-    minWidth: 40,
-    minHeight: 40,
+    minWidth: 30,
+    minHeight: 30,
   },
 
   // リスト関連

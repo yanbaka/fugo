@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { black } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 export const COLORS = {
   // ベースカラー（白系）
@@ -6,11 +7,13 @@ export const COLORS = {
   lightGray: '#f5f5f5', // 薄いグレー（背景用）
   mediumGray: '#e0e0e0',
   darkGray: '#9e9e9e',
+  black: '#000000',
 
   // 渋谷mabls差し色
   mablsPurple: '#6366f1', // インディゴ系パープル
   mablsBlue: '#3b82f6', // ブルー
   mablsAccent: '#8b5cf6', // ライトパープル
+  mablsPink: '#ec4899', // 渋谷マブルス風ピンク
 
   // テキストカラー
   textPrimary: '#1f2937', // ダークグレー
@@ -108,12 +111,12 @@ export const STYLES = StyleSheet.create({
   // アクセントボタン（mabls色）
   accentButton: {
     backgroundColor: COLORS.mablsPurple,
-    borderRadius: 12,
+    borderRadius: 16,
     borderWidth: 0,
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    // paddingHorizontal: 10,
     shadowColor: COLORS.mablsPurple,
     shadowOffset: {
       width: 0,
@@ -172,7 +175,7 @@ export const STYLES = StyleSheet.create({
   // 小さなテキスト
   smallText: {
     fontSize: 12,
-    color: COLORS.textSecondary,
+    // color: COLORS.textSecondary,
     fontFamily: 'System',
     fontWeight: '500',
   },
