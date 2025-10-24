@@ -144,9 +144,6 @@ const EncounterHistoryScreen = () => {
 
   return (
     <View style={[STYLES.container, styles.container]}>
-      {/* タイル状背景 */}
-      <TileBackground />
-
       <SafeAreaView style={styles.safeArea}>
         {/* ヘッダー */}
         <Surface
@@ -273,7 +270,7 @@ const EncounterHistoryScreen = () => {
                   : 'そとに でかけて みよう！'}
               </Text>
               {(searchQuery || selectedCategory) && (
-                <Surface style={MOTHER2_STYLES.accentButton} elevation={0}>
+                <Surface style={STYLES.accentButton} elevation={0}>
                   <Button
                     mode="text"
                     onPress={clearAllFilters}
@@ -357,8 +354,7 @@ const EncounterHistoryScreen = () => {
           <Button
             mode="text"
             onPress={() => console.log('マップ表示')}
-            textColor={COLORS.textAccent}
-            labelStyle={STYLES.smallText}
+            textColor={COLORS.white}
             icon={() => (
               <Ionicons name="map" size={16} color={COLORS.textAccent} />
             )}
@@ -420,8 +416,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   selectedChip: {
-    backgroundColor: COLORS.warmBeige,
-    borderColor: COLORS.darkBeige,
+    backgroundColor: COLORS.mablsAccent,
+    borderColor: COLORS.mablsPurple,
   },
   clearButtonSurface: {
     marginLeft: 'auto',
@@ -472,7 +468,7 @@ const styles = StyleSheet.create({
   },
   messageDivider: {
     height: 1,
-    backgroundColor: COLORS.mediumBeige,
+    backgroundColor: COLORS.lightBorder,
     marginVertical: 8,
   },
   messageText: {
