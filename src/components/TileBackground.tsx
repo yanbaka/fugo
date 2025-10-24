@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Dimensions, StyleSheet } from 'react-native';
-import { MOTHER2_COLORS } from '../styles/mother2Theme';
+import { COLORS } from '../styles/theme';
 
 const TileBackground = () => {
   const { width, height } = Dimensions.get('window');
@@ -38,18 +38,18 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: MOTHER2_COLORS.lightBeige,
+    backgroundColor: COLORS.lightBeige,
   },
   tile: {
     position: 'absolute',
     width: 20,
     height: 20,
-    backgroundColor: MOTHER2_COLORS.tileLight,
+    backgroundColor: COLORS.tileLight,
     borderWidth: 0.5,
-    borderColor: MOTHER2_COLORS.tileStroke,
+    borderColor: COLORS.tileStroke,
   },
   tileAlternate: {
-    backgroundColor: MOTHER2_COLORS.tileDark,
+    backgroundColor: COLORS.tileDark,
   },
 });
 

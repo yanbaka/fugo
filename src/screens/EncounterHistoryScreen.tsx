@@ -14,7 +14,7 @@ import {
 } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 import { EncounterHistoryItem, Category } from '../types';
-import { MOTHER2_COLORS, MOTHER2_STYLES } from '../styles/mother2Theme';
+import { COLORS, STYLES } from '../styles/theme';
 import TileBackground from '../components/TileBackground';
 
 const EncounterHistoryScreen = () => {
@@ -143,43 +143,43 @@ const EncounterHistoryScreen = () => {
   };
 
   return (
-    <View style={[MOTHER2_STYLES.container, styles.container]}>
+    <View style={[STYLES.container, styles.container]}>
       {/* タイル状背景 */}
       <TileBackground />
 
       <SafeAreaView style={styles.safeArea}>
         {/* ヘッダー */}
         <Surface
-          style={[MOTHER2_STYLES.mainWindow, styles.headerSurface]}
+          style={[STYLES.mainWindow, styles.headerSurface]}
           elevation={0}
         >
-          <Text style={[MOTHER2_STYLES.titleText, styles.headerTitle]}>
+          <Text style={[STYLES.titleText, styles.headerTitle]}>
             すれちがい つうしん
           </Text>
-          <Text style={[MOTHER2_STYLES.subText, styles.headerSubtitle]}>
+          <Text style={[STYLES.subText, styles.headerSubtitle]}>
             ～ れきし ～
           </Text>
         </Surface>
 
         {/* 検索バー */}
         <Surface
-          style={[MOTHER2_STYLES.mainWindow, styles.searchSurface]}
+          style={[STYLES.mainWindow, styles.searchSurface]}
           elevation={0}
         >
           <Searchbar
             placeholder="なまえや ばしょで さがす..."
             onChangeText={setSearchQuery}
             value={searchQuery}
-            style={[MOTHER2_STYLES.subWindow, styles.searchBar]}
+            style={[STYLES.subWindow, styles.searchBar]}
             inputStyle={styles.searchInput}
-            iconColor={MOTHER2_COLORS.iconColor}
-            placeholderTextColor={MOTHER2_COLORS.textLight}
+            iconColor={COLORS.iconColor}
+            placeholderTextColor={COLORS.textLight}
           />
         </Surface>
 
         {/* カテゴリフィルター */}
         <Surface
-          style={[MOTHER2_STYLES.mainWindow, styles.filterSurface]}
+          style={[STYLES.mainWindow, styles.filterSurface]}
           elevation={0}
         >
           <ScrollView
@@ -189,7 +189,7 @@ const EncounterHistoryScreen = () => {
           >
             <Surface
               style={[
-                MOTHER2_STYLES.button,
+                STYLES.button,
                 styles.categoryChip,
                 selectedCategory === null && styles.selectedChip,
               ]}
@@ -200,10 +200,10 @@ const EncounterHistoryScreen = () => {
                 onPress={() => setSelectedCategory(null)}
                 textColor={
                   selectedCategory === null
-                    ? MOTHER2_COLORS.textAccent
-                    : MOTHER2_COLORS.textPrimary
+                    ? COLORS.textAccent
+                    : COLORS.textPrimary
                 }
-                labelStyle={MOTHER2_STYLES.smallText}
+                labelStyle={STYLES.smallText}
               >
                 すべて
               </Button>
@@ -212,7 +212,7 @@ const EncounterHistoryScreen = () => {
               <Surface
                 key={category}
                 style={[
-                  MOTHER2_STYLES.button,
+                  STYLES.button,
                   styles.categoryChip,
                   selectedCategory === category && styles.selectedChip,
                 ]}
@@ -223,10 +223,10 @@ const EncounterHistoryScreen = () => {
                   onPress={() => setSelectedCategory(category)}
                   textColor={
                     selectedCategory === category
-                      ? MOTHER2_COLORS.textAccent
-                      : MOTHER2_COLORS.textPrimary
+                      ? COLORS.textAccent
+                      : COLORS.textPrimary
                   }
-                  labelStyle={MOTHER2_STYLES.smallText}
+                  labelStyle={STYLES.smallText}
                 >
                   {category}
                 </Button>
@@ -236,13 +236,13 @@ const EncounterHistoryScreen = () => {
 
           {(searchQuery || selectedCategory) && (
             <Surface
-              style={[MOTHER2_STYLES.accentButton, styles.clearButtonSurface]}
+              style={[STYLES.accentButton, styles.clearButtonSurface]}
               elevation={0}
             >
               <IconButton
                 icon="close"
                 size={16}
-                iconColor={MOTHER2_COLORS.iconColor}
+                iconColor={COLORS.iconColor}
                 onPress={clearAllFilters}
               />
             </Surface>
@@ -259,17 +259,15 @@ const EncounterHistoryScreen = () => {
         >
           {filteredHistory.length === 0 ? (
             <Surface
-              style={[MOTHER2_STYLES.textBox, styles.emptyMessageBox]}
+              style={[STYLES.textBox, styles.emptyMessageBox]}
               elevation={0}
             >
-              <Text
-                style={[MOTHER2_STYLES.titleText, styles.emptyMessageTitle]}
-              >
+              <Text style={[STYLES.titleText, styles.emptyMessageTitle]}>
                 {searchQuery || selectedCategory
                   ? 'みつからなかった...'
                   : 'まだ だれとも すれちがって いない'}
               </Text>
-              <Text style={[MOTHER2_STYLES.subText, styles.emptyMessageText]}>
+              <Text style={[STYLES.subText, styles.emptyMessageText]}>
                 {searchQuery || selectedCategory
                   ? 'べつの じょうけんで さがしてみよう'
                   : 'そとに でかけて みよう！'}
@@ -279,8 +277,8 @@ const EncounterHistoryScreen = () => {
                   <Button
                     mode="text"
                     onPress={clearAllFilters}
-                    textColor={MOTHER2_COLORS.textAccent}
-                    labelStyle={MOTHER2_STYLES.smallText}
+                    textColor={COLORS.textAccent}
+                    labelStyle={STYLES.smallText}
                   >
                     じょうけんを クリア
                   </Button>
@@ -290,12 +288,10 @@ const EncounterHistoryScreen = () => {
           ) : (
             <>
               <Surface
-                style={[MOTHER2_STYLES.accentButton, styles.resultCountSurface]}
+                style={[STYLES.accentButton, styles.resultCountSurface]}
                 elevation={0}
               >
-                <Text
-                  style={[MOTHER2_STYLES.accentText, styles.resultCountText]}
-                >
+                <Text style={[STYLES.accentText, styles.resultCountText]}>
                   {filteredHistory.length}けんの きろく が みつかった
                 </Text>
               </Surface>
@@ -303,22 +299,20 @@ const EncounterHistoryScreen = () => {
               {filteredHistory.map((item) => (
                 <Surface
                   key={item.id}
-                  style={[MOTHER2_STYLES.textBox, styles.historyMessageBox]}
+                  style={[STYLES.textBox, styles.historyMessageBox]}
                   elevation={0}
                 >
                   {/* ユーザー情報と日時 */}
                   <View style={styles.messageHeader}>
                     <View style={styles.userInfo}>
-                      <Text
-                        style={[MOTHER2_STYLES.accentText, styles.userName]}
-                      >
+                      <Text style={[STYLES.accentText, styles.userName]}>
                         {item.userName || `ユーザー${item.userId}`}
                       </Text>
-                      <Text style={[MOTHER2_STYLES.subText, styles.location]}>
+                      <Text style={[STYLES.subText, styles.location]}>
                         📍 {item.location}
                       </Text>
                     </View>
-                    <Text style={[MOTHER2_STYLES.smallText, styles.dateTime]}>
+                    <Text style={[STYLES.smallText, styles.dateTime]}>
                       {formatDateTime(item.encounterDateTime)}
                     </Text>
                   </View>
@@ -326,7 +320,7 @@ const EncounterHistoryScreen = () => {
                   <View style={styles.messageDivider} />
 
                   {/* 投稿内容 */}
-                  <Text style={[MOTHER2_STYLES.mainText, styles.messageText]}>
+                  <Text style={[STYLES.mainText, styles.messageText]}>
                     {item.text}
                   </Text>
 
@@ -335,14 +329,14 @@ const EncounterHistoryScreen = () => {
                     {item.categories.map((category) => (
                       <Surface
                         key={category}
-                        style={[MOTHER2_STYLES.tag, styles.categoryTag]}
+                        style={[STYLES.tag, styles.categoryTag]}
                         elevation={0}
                       >
                         <Button
                           mode="text"
                           onPress={() => setSelectedCategory(category)}
-                          textColor={MOTHER2_COLORS.textAccent}
-                          labelStyle={MOTHER2_STYLES.smallText}
+                          textColor={COLORS.textAccent}
+                          labelStyle={STYLES.smallText}
                         >
                           {category}
                         </Button>
@@ -357,20 +351,16 @@ const EncounterHistoryScreen = () => {
 
         {/* FAB */}
         <Surface
-          style={[MOTHER2_STYLES.accentButton, styles.mapFabSurface]}
+          style={[STYLES.accentButton, styles.mapFabSurface]}
           elevation={0}
         >
           <Button
             mode="text"
             onPress={() => console.log('マップ表示')}
-            textColor={MOTHER2_COLORS.textAccent}
-            labelStyle={MOTHER2_STYLES.smallText}
+            textColor={COLORS.textAccent}
+            labelStyle={STYLES.smallText}
             icon={() => (
-              <Ionicons
-                name="map"
-                size={16}
-                color={MOTHER2_COLORS.textAccent}
-              />
+              <Ionicons name="map" size={16} color={COLORS.textAccent} />
             )}
           >
             マップ
@@ -412,7 +402,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     fontSize: 14,
-    color: MOTHER2_COLORS.textPrimary,
+    color: COLORS.textPrimary,
   },
 
   // フィルター関連
@@ -430,8 +420,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   selectedChip: {
-    backgroundColor: MOTHER2_COLORS.warmBeige,
-    borderColor: MOTHER2_COLORS.darkBeige,
+    backgroundColor: COLORS.warmBeige,
+    borderColor: COLORS.darkBeige,
   },
   clearButtonSurface: {
     marginLeft: 'auto',
@@ -482,7 +472,7 @@ const styles = StyleSheet.create({
   },
   messageDivider: {
     height: 1,
-    backgroundColor: MOTHER2_COLORS.mediumBeige,
+    backgroundColor: COLORS.mediumBeige,
     marginVertical: 8,
   },
   messageText: {

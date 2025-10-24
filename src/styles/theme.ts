@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const MOTHER2_COLORS = {
+export const COLORS = {
   // メインカラー（ベージュ系同系色）
   softBeige: '#f5f0e8', // 淡いベージュ（メインカラー）
   warmBeige: '#ede0d3', // 温かみのあるベージュ（アクセントカラー）
@@ -34,23 +34,23 @@ export const MOTHER2_COLORS = {
 export const createTileBackground = () => {
   return {
     // SVGパターンのような視覚効果をCSSで実現
-    backgroundColor: MOTHER2_COLORS.lightBeige,
+    backgroundColor: COLORS.lightBeige,
     backgroundImage: `
-      linear-gradient(45deg, ${MOTHER2_COLORS.tileLight} 25%, transparent 25%), 
-      linear-gradient(-45deg, ${MOTHER2_COLORS.tileLight} 25%, transparent 25%), 
-      linear-gradient(45deg, transparent 75%, ${MOTHER2_COLORS.tileDark} 75%), 
-      linear-gradient(-45deg, transparent 75%, ${MOTHER2_COLORS.tileDark} 75%)
+      linear-gradient(45deg, ${COLORS.tileLight} 25%, transparent 25%), 
+      linear-gradient(-45deg, ${COLORS.tileLight} 25%, transparent 25%), 
+      linear-gradient(45deg, transparent 75%, ${COLORS.tileDark} 75%), 
+      linear-gradient(-45deg, transparent 75%, ${COLORS.tileDark} 75%)
     `,
     backgroundSize: '20px 20px',
     backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
   };
 };
 
-export const MOTHER2_STYLES = StyleSheet.create({
+export const STYLES = StyleSheet.create({
   // 基本コンテナ（タイル状背景）
   container: {
     flex: 1,
-    backgroundColor: MOTHER2_COLORS.lightBeige,
+    backgroundColor: COLORS.lightBeige,
     // React Nativeではbackground-imageが使えないため、別の方法でタイル効果を実現
   },
 
@@ -61,7 +61,7 @@ export const MOTHER2_STYLES = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: MOTHER2_COLORS.lightBeige,
+    backgroundColor: COLORS.lightBeige,
     // パターンの代わりに複数のビューでタイル効果を作成
   },
 
@@ -70,25 +70,25 @@ export const MOTHER2_STYLES = StyleSheet.create({
     position: 'absolute',
     width: 20,
     height: 20,
-    backgroundColor: MOTHER2_COLORS.tileLight,
+    backgroundColor: COLORS.tileLight,
     borderWidth: 1, // 0.5から1に変更
-    borderColor: MOTHER2_COLORS.tileStroke,
+    borderColor: COLORS.tileStroke,
   },
 
   // 交互のタイル
   tileAlternate: {
-    backgroundColor: MOTHER2_COLORS.tileDark,
+    backgroundColor: COLORS.tileDark,
   },
 
   // メインウィンドウ（境界線を強化）
   mainWindow: {
-    backgroundColor: MOTHER2_COLORS.softBeige,
+    backgroundColor: COLORS.softBeige,
     borderRadius: 20,
     borderWidth: 3, // 1から3に変更
-    borderColor: MOTHER2_COLORS.strongBorder, // より濃いボーダー色
+    borderColor: COLORS.strongBorder, // より濃いボーダー色
     margin: 12,
     padding: 20,
-    shadowColor: MOTHER2_COLORS.strongBorder,
+    shadowColor: COLORS.strongBorder,
     shadowOffset: {
       width: 0,
       height: 4, // シャドウを大きく
@@ -102,12 +102,12 @@ export const MOTHER2_STYLES = StyleSheet.create({
 
   // サブウィンドウ（境界線を強化）
   subWindow: {
-    backgroundColor: MOTHER2_COLORS.creamBeige,
+    backgroundColor: COLORS.creamBeige,
     borderRadius: 16,
     borderWidth: 2, // 1から2に変更
-    borderColor: MOTHER2_COLORS.mediumBorder,
+    borderColor: COLORS.mediumBorder,
     padding: 16,
-    shadowColor: MOTHER2_COLORS.mediumBorder,
+    shadowColor: COLORS.mediumBorder,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -119,13 +119,13 @@ export const MOTHER2_STYLES = StyleSheet.create({
 
   // テキストボックス（境界線を強化）
   textBox: {
-    backgroundColor: MOTHER2_COLORS.white,
+    backgroundColor: COLORS.white,
     borderRadius: 20,
     borderWidth: 2, // 1から2に変更
-    borderColor: MOTHER2_COLORS.strongBorder, // より濃いボーダー
+    borderColor: COLORS.strongBorder, // より濃いボーダー
     padding: 20,
     margin: 8,
-    shadowColor: MOTHER2_COLORS.strongBorder,
+    shadowColor: COLORS.strongBorder,
     shadowOffset: {
       width: 0,
       height: 3, // シャドウを大きく
@@ -137,15 +137,15 @@ export const MOTHER2_STYLES = StyleSheet.create({
 
   // 基本ボタン（境界線を強化）
   button: {
-    backgroundColor: MOTHER2_COLORS.creamBeige,
+    backgroundColor: COLORS.creamBeige,
     borderRadius: 25,
     borderWidth: 2, // 1から2に変更
-    borderColor: MOTHER2_COLORS.mediumBorder,
+    borderColor: COLORS.mediumBorder,
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    shadowColor: MOTHER2_COLORS.mediumBorder,
+    shadowColor: COLORS.mediumBorder,
     shadowOffset: {
       width: 0,
       height: 3,
@@ -157,15 +157,15 @@ export const MOTHER2_STYLES = StyleSheet.create({
 
   // アクセントボタン（境界線を強化）
   accentButton: {
-    backgroundColor: MOTHER2_COLORS.warmBeige,
+    backgroundColor: COLORS.warmBeige,
     borderRadius: 25,
     borderWidth: 3, // 1から3に変更
-    borderColor: MOTHER2_COLORS.strongBorder, // より濃いボーダー
+    borderColor: COLORS.strongBorder, // より濃いボーダー
     minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    shadowColor: MOTHER2_COLORS.strongBorder,
+    shadowColor: COLORS.strongBorder,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -177,21 +177,21 @@ export const MOTHER2_STYLES = StyleSheet.create({
 
   // 選択されたボタン（境界線を強化）
   selectedButton: {
-    backgroundColor: MOTHER2_COLORS.mediumBeige,
-    borderColor: MOTHER2_COLORS.strongBorder,
+    backgroundColor: COLORS.mediumBeige,
+    borderColor: COLORS.strongBorder,
     borderWidth: 3, // より太い境界線
   },
 
   // タグ（境界線を強化）
   tag: {
-    backgroundColor: MOTHER2_COLORS.warmBeige,
+    backgroundColor: COLORS.warmBeige,
     borderRadius: 20,
     borderWidth: 2, // 1から2に変更
-    borderColor: MOTHER2_COLORS.strongBorder,
+    borderColor: COLORS.strongBorder,
     paddingHorizontal: 16,
     paddingVertical: 8,
     margin: 4,
-    shadowColor: MOTHER2_COLORS.mediumBorder,
+    shadowColor: COLORS.mediumBorder,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -205,11 +205,11 @@ export const MOTHER2_STYLES = StyleSheet.create({
   titleText: {
     fontSize: 22,
     fontWeight: '600',
-    color: MOTHER2_COLORS.textPrimary,
+    color: COLORS.textPrimary,
     textAlign: 'center',
     fontFamily: 'System',
     letterSpacing: 0.5,
-    textShadowColor: MOTHER2_COLORS.lightBorder, // テキストシャドウ追加
+    textShadowColor: COLORS.lightBorder, // テキストシャドウ追加
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
@@ -217,7 +217,7 @@ export const MOTHER2_STYLES = StyleSheet.create({
   // メインテキスト
   mainText: {
     fontSize: 16,
-    color: MOTHER2_COLORS.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: 'System',
     lineHeight: 24,
     fontWeight: '400',
@@ -226,7 +226,7 @@ export const MOTHER2_STYLES = StyleSheet.create({
   // サブテキスト
   subText: {
     fontSize: 14,
-    color: MOTHER2_COLORS.textSecondary,
+    color: COLORS.textSecondary,
     fontFamily: 'System',
     fontWeight: '400',
   },
@@ -234,20 +234,20 @@ export const MOTHER2_STYLES = StyleSheet.create({
   // 小さなテキスト
   smallText: {
     fontSize: 12,
-    color: MOTHER2_COLORS.textSecondary,
+    color: COLORS.textSecondary,
     fontFamily: 'System',
     fontWeight: '500',
   },
 
   // アクセントテキスト
   accentText: {
-    color: MOTHER2_COLORS.textAccent,
+    color: COLORS.textAccent,
     fontFamily: 'System',
     fontWeight: '600',
   },
 });
 
-export const MOTHER2_THEME = {
-  colors: MOTHER2_COLORS,
-  styles: MOTHER2_STYLES,
+export const THEME = {
+  colors: COLORS,
+  styles: STYLES,
 };
