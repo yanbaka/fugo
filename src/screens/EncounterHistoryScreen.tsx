@@ -167,7 +167,7 @@ const EncounterHistoryScreen = () => {
             placeholder="なまえや ばしょで さがす..."
             onChangeText={setSearchQuery}
             value={searchQuery}
-            style={[STYLES.subWindow, styles.searchBar]}
+            style={[STYLES.subWindow]}
             inputStyle={styles.searchInput}
             iconColor={COLORS.iconColor}
             placeholderTextColor={COLORS.textLight}
@@ -187,7 +187,7 @@ const EncounterHistoryScreen = () => {
             <Surface
               style={[
                 STYLES.button,
-                styles.categoryChip,
+                // styles.categoryChip,
                 selectedCategory === null && styles.selectedChip,
               ]}
               elevation={0}
@@ -210,7 +210,7 @@ const EncounterHistoryScreen = () => {
                 key={category}
                 style={[
                   STYLES.button,
-                  styles.categoryChip,
+                  // styles.categoryChip,
                   selectedCategory === category && styles.selectedChip,
                 ]}
                 elevation={0}
@@ -326,13 +326,13 @@ const EncounterHistoryScreen = () => {
                     {item.categories.map((category) => (
                       <Surface
                         key={category}
-                        style={[STYLES.tag, styles.categoryTag]}
+                        style={[STYLES.tag]}
                         elevation={0}
                       >
                         <Button
                           mode="text"
                           onPress={() => setSelectedCategory(category)}
-                          textColor={COLORS.textAccent}
+                          textColor={COLORS.textPrimary}
                           labelStyle={STYLES.smallText}
                         >
                           {category}
@@ -393,9 +393,6 @@ const styles = StyleSheet.create({
   searchSurface: {
     marginTop: 0,
   },
-  searchBar: {
-    // MOTHER2_STYLES.subWindowを継承
-  },
   searchInput: {
     fontSize: 14,
     color: COLORS.textPrimary,
@@ -409,11 +406,6 @@ const styles = StyleSheet.create({
   },
   categoryScroll: {
     paddingRight: 8,
-  },
-  categoryChip: {
-    marginRight: 6,
-    minHeight: 36,
-    justifyContent: 'center',
   },
   selectedChip: {
     backgroundColor: COLORS.mablsPink,

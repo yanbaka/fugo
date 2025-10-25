@@ -56,18 +56,8 @@ export const STYLES = StyleSheet.create({
   // サブウィンドウ
   subWindow: {
     backgroundColor: COLORS.white,
-    borderRadius: 12,
     borderWidth: 1,
     borderColor: COLORS.lightBorder,
-    padding: 16,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
   },
 
   // テキストボックス
@@ -91,21 +81,14 @@ export const STYLES = StyleSheet.create({
   // 基本ボタン
   button: {
     backgroundColor: COLORS.white,
-    borderRadius: 12,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: COLORS.mediumBorder,
-    minHeight: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 8,
     shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 1,
+    marginRight: 8,
   },
 
   // アクセントボタン（mabls色）
@@ -137,11 +120,9 @@ export const STYLES = StyleSheet.create({
   // タグ
   tag: {
     backgroundColor: COLORS.white,
-    borderRadius: 20,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: COLORS.lightBorder,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
     margin: 4,
   },
 
