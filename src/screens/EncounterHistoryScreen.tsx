@@ -20,9 +20,7 @@ import TileBackground from '../components/TileBackground';
 const EncounterHistoryScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null
-  );
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 
   // サンプルデータ
   const [encounterHistory] = useState<EncounterHistoryItem[]>([
@@ -82,6 +80,22 @@ const EncounterHistoryScreen = () => {
     'アニメ・漫画',
   ];
 
+  // カテゴリの選択/解除を切り替える関数
+  const toggleCategory = (category: Category) => {
+    setSelectedCategories((prev) => {
+      if (prev.includes(category)) {
+        return prev.filter((c) => c !== category);
+      } else {
+        return [...prev, category];
+      }
+    });
+  };
+
+  // 特定のカテゴリを解除する関数
+  const removeCategory = (category: Category) => {
+    setSelectedCategories((prev) => prev.filter((c) => c !== category));
+  };
+
   // フィルタリングされた履歴データ
   const filteredHistory = useMemo(() => {
     let filtered = encounterHistory;
@@ -97,10 +111,12 @@ const EncounterHistoryScreen = () => {
       );
     }
 
-    // カテゴリフィルター
-    if (selectedCategory) {
+    // カテゴリフィルター（複数選択対応）
+    if (selectedCategories.length > 0) {
       filtered = filtered.filter((item) =>
-        item.categories.includes(selectedCategory)
+        selectedCategories.some((category) =>
+          item.categories.includes(category)
+        )
       );
     }
 
@@ -108,7 +124,7 @@ const EncounterHistoryScreen = () => {
     return filtered.sort(
       (a, b) => b.encounterDateTime.getTime() - a.encounterDateTime.getTime()
     );
-  }, [encounterHistory, searchQuery, selectedCategory]);
+  }, [encounterHistory, searchQuery, selectedCategories]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -139,7 +155,7 @@ const EncounterHistoryScreen = () => {
 
   const clearAllFilters = () => {
     setSearchQuery('');
-    setSelectedCategory(null);
+    setSelectedCategories([]);
   };
 
   return (
@@ -187,16 +203,15 @@ const EncounterHistoryScreen = () => {
             <Surface
               style={[
                 STYLES.button,
-                // styles.categoryChip,
-                selectedCategory === null && styles.selectedChip,
+                selectedCategories.length === 0 && styles.selectedChip,
               ]}
               elevation={0}
             >
               <Button
                 mode="text"
-                onPress={() => setSelectedCategory(null)}
+                onPress={() => setSelectedCategories([])}
                 textColor={
-                  selectedCategory === null
+                  selectedCategories.length === 0
                     ? COLORS.textAccent
                     : COLORS.textPrimary
                 }
@@ -205,45 +220,40 @@ const EncounterHistoryScreen = () => {
                 すべて
               </Button>
             </Surface>
-            {categories.map((category) => (
-              <Surface
-                key={category}
-                style={[
-                  STYLES.button,
-                  // styles.categoryChip,
-                  selectedCategory === category && styles.selectedChip,
-                ]}
-                elevation={0}
-              >
-                <Button
-                  mode="text"
-                  onPress={() => setSelectedCategory(category)}
-                  textColor={
-                    selectedCategory === category
-                      ? COLORS.textAccent
-                      : COLORS.textPrimary
-                  }
-                  labelStyle={STYLES.smallText}
+            {categories.map((category) => {
+              const isSelected = selectedCategories.includes(category);
+              return (
+                <Surface
+                  key={category}
+                  style={[STYLES.button, isSelected && styles.selectedChip]}
+                  elevation={0}
                 >
-                  {category}
-                </Button>
-              </Surface>
-            ))}
+                  <View style={styles.categoryButtonContainer}>
+                    <Button
+                      mode="text"
+                      onPress={() => toggleCategory(category)}
+                      textColor={
+                        isSelected ? COLORS.textAccent : COLORS.textPrimary
+                      }
+                      labelStyle={STYLES.smallText}
+                      style={styles.categoryButton}
+                    >
+                      {category}
+                    </Button>
+                    {isSelected && (
+                      <IconButton
+                        icon="close"
+                        size={12}
+                        iconColor={COLORS.textAccent}
+                        onPress={() => removeCategory(category)}
+                        style={styles.categoryCloseButton}
+                      />
+                    )}
+                  </View>
+                </Surface>
+              );
+            })}
           </ScrollView>
-
-          {(searchQuery || selectedCategory) && (
-            <Surface
-              style={[STYLES.accentButton, styles.clearButtonSurface]}
-              elevation={0}
-            >
-              <IconButton
-                icon="close"
-                size={16}
-                iconColor={COLORS.white}
-                onPress={clearAllFilters}
-              />
-            </Surface>
-          )}
         </Surface>
 
         {/* 履歴リスト */}
@@ -260,16 +270,16 @@ const EncounterHistoryScreen = () => {
               elevation={0}
             >
               <Text style={[STYLES.titleText, styles.emptyMessageTitle]}>
-                {searchQuery || selectedCategory
+                {searchQuery || selectedCategories.length > 0
                   ? 'みつからなかった...'
                   : 'まだ だれとも すれちがって いない'}
               </Text>
               <Text style={[STYLES.subText, styles.emptyMessageText]}>
-                {searchQuery || selectedCategory
+                {searchQuery || selectedCategories.length > 0
                   ? 'べつの じょうけんで さがしてみよう'
                   : 'そとに でかけて みよう！'}
               </Text>
-              {(searchQuery || selectedCategory) && (
+              {(searchQuery || selectedCategories.length > 0) && (
                 <Surface style={STYLES.accentButton} elevation={0}>
                   <Button
                     mode="text"
@@ -331,7 +341,7 @@ const EncounterHistoryScreen = () => {
                       >
                         <Button
                           mode="text"
-                          onPress={() => setSelectedCategory(category)}
+                          onPress={() => toggleCategory(category)}
                           textColor={COLORS.textPrimary}
                           labelStyle={STYLES.smallText}
                         >
@@ -411,10 +421,22 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.mablsPink,
     borderColor: COLORS.mablsPink,
   },
-  clearButtonSurface: {
-    marginLeft: 'auto',
-    minWidth: 30,
-    minHeight: 30,
+  categoryButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  categoryButton: {
+    margin: 0,
+    minWidth: 0,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  categoryCloseButton: {
+    margin: 0,
+    width: 20,
+    height: 20,
+    marginLeft: 2,
   },
 
   // リスト関連
