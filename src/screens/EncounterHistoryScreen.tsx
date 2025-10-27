@@ -236,7 +236,6 @@ const EncounterHistoryScreen = () => {
                         isSelected ? COLORS.textAccent : COLORS.textPrimary
                       }
                       labelStyle={STYLES.smallText}
-                      style={styles.categoryButton}
                     >
                       {category}
                     </Button>
@@ -426,17 +425,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 4,
   },
-  categoryButton: {
-    margin: 0,
-    minWidth: 0,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-  },
   categoryCloseButton: {
     margin: 0,
     width: 20,
     height: 20,
-    marginLeft: 2,
   },
 
   // リスト関連

@@ -86,7 +86,6 @@ export const STYLES = StyleSheet.create({
     borderColor: COLORS.mediumBorder,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 8,
     shadowColor: '#000000',
     marginRight: 8,
   },
