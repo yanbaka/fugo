@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import EncounterSettingsScreen from '../screens/EncounterSettingsScreen';
-import EncounterHistoryScreen from '../screens/EncounterHistoryScreen';
 
 const AppNavigator = () => {
   const [index, setIndex] = useState(0);
@@ -14,12 +13,6 @@ const AppNavigator = () => {
       title: 'ホーム',
       focusedIcon: () => <Ionicons name="home" size={24} />,
       unfocusedIcon: () => <Ionicons name="home-outline" size={24} />,
-    },
-    {
-      key: 'history',
-      title: 'すれ違い履歴',
-      focusedIcon: () => <Ionicons name="time" size={24} />,
-      unfocusedIcon: () => <Ionicons name="time-outline" size={24} />,
     },
     {
       key: 'encounter',
@@ -37,7 +30,6 @@ const AppNavigator = () => {
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeScreen,
-    history: EncounterHistoryScreen,
     encounter: EncounterSettingsScreen,
     profile: ProfileScreen,
   });
