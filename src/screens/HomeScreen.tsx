@@ -12,7 +12,7 @@ import { EncounterHistoryItem, Category } from '../types';
 import { COLORS, STYLES } from '../styles/theme';
 import { styles } from '../styles/homeScreenStyle';
 import { mockEncounterHistory } from '../data/sampleData';
-import { categories } from '../data/categories';
+import { categories, CategoryWithIcon } from '../data/categories';
 
 const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -150,31 +150,32 @@ const HomeScreen = () => {
                 すべて
               </Button>
             </Surface>
-            {categories.map((category) => {
-              const isSelected = selectedCategories.includes(category);
+            {categories.map((categoryObj: CategoryWithIcon) => {
+              const isSelected = selectedCategories.includes(categoryObj.name);
               return (
                 <Surface
-                  key={category}
+                  key={categoryObj.name}
                   style={[STYLES.button, isSelected && styles.selectedChip]}
                   elevation={0}
                 >
                   <View style={styles.categoryButtonContainer}>
                     <Button
                       mode="text"
-                      onPress={() => toggleCategory(category)}
+                      icon={categoryObj.icon}
+                      onPress={() => toggleCategory(categoryObj.name)}
                       textColor={
                         isSelected ? COLORS.textAccent : COLORS.textPrimary
                       }
                       labelStyle={STYLES.smallText}
                     >
-                      {category}
+                      {categoryObj.name}
                     </Button>
                     {isSelected && (
                       <IconButton
                         icon="close"
                         size={12}
                         iconColor={COLORS.textAccent}
-                        onPress={() => removeCategory(category)}
+                        onPress={() => removeCategory(categoryObj.name)}
                         style={styles.categoryCloseButton}
                       />
                     )}

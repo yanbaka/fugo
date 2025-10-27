@@ -1,10 +1,15 @@
 import { Category } from '../types';
 
-export const categories: Category[] = [
-  '旅行',
-  'グルメ・料理',
-  'ファッション',
-  '映画',
-  '音楽',
-  'アニメ・漫画',
+export interface CategoryWithIcon {
+  name: Category;
+  icon: string;
+}
+
+export const categories: CategoryWithIcon[] = [
+  { name: '旅行', icon: 'airplane' },
+  { name: 'グルメ・料理', icon: 'food' },
+  { name: 'ファッション', icon: 'tshirt-crew' },
+  { name: '映画', icon: 'film' },
+  { name: '音楽', icon: 'music' },
+  { name: 'アニメ・漫画', icon: 'book' },
 ];
