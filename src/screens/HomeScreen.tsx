@@ -159,33 +159,15 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={[STYLES.container, styles.container]}>
+    <View style={[STYLES.container]}>
       <SafeAreaView style={styles.safeArea}>
-        {/* ヘッダー */}
-        <Surface
-          style={[STYLES.mainWindow, styles.headerSurface]}
-          elevation={0}
-        >
-          <View style={styles.headerTitleContainer}>
-            <Ionicons
-              name="people"
-              size={24}
-              color={COLORS.textPrimary}
-              style={styles.headerIcon}
-            />
-            <Text style={[STYLES.titleText, styles.headerTitle]}>
-              すれちがい つうしん
-            </Text>
-          </View>
-        </Surface>
-
         {/* 検索バー */}
         <Surface
           style={[STYLES.mainWindow, styles.searchSurface]}
           elevation={0}
         >
           <Searchbar
-            placeholder="なまえや ばしょで さがす..."
+            placeholder="名前や場所で検索..."
             onChangeText={setSearchQuery}
             value={searchQuery}
             style={[STYLES.subWindow]}
@@ -275,13 +257,13 @@ const HomeScreen = () => {
             >
               <Text style={[STYLES.titleText, styles.emptyMessageTitle]}>
                 {searchQuery || selectedCategories.length > 0
-                  ? 'みつからなかった...'
-                  : 'まだ だれとも すれちがって いない'}
+                  ? '見つかりませんでした'
+                  : 'まだ誰ともすれ違っていません'}
               </Text>
               <Text style={[STYLES.subText, styles.emptyMessageText]}>
                 {searchQuery || selectedCategories.length > 0
-                  ? 'べつの じょうけんで さがしてみよう'
-                  : 'そとに でかけて みよう！'}
+                  ? '別の条件で検索してみましょう'
+                  : '外に出かけてみましょう！'}
               </Text>
               {(searchQuery || selectedCategories.length > 0) && (
                 <Surface style={STYLES.accentButton} elevation={0}>
@@ -291,7 +273,7 @@ const HomeScreen = () => {
                     textColor={COLORS.textAccent}
                     labelStyle={STYLES.smallText}
                   >
-                    じょうけんを クリア
+                    条件をクリア
                   </Button>
                 </Surface>
               )}
@@ -303,7 +285,7 @@ const HomeScreen = () => {
                 elevation={0}
               >
                 <Text style={[STYLES.accentText, styles.resultCountText]}>
-                  {filteredHistory.length}けんの きろく が みつかった
+                  {filteredHistory.length}件の記録が見つかりました
                 </Text>
               </Surface>
 
@@ -359,23 +341,6 @@ const HomeScreen = () => {
             </>
           )}
         </ScrollView>
-
-        {/* FAB */}
-        <Surface
-          style={[STYLES.accentButton, styles.mapFabSurface]}
-          elevation={0}
-        >
-          <Button
-            mode="text"
-            onPress={() => console.log('マップ表示')}
-            textColor={COLORS.white}
-            icon={() => (
-              <Ionicons name="map" size={16} color={COLORS.textAccent} />
-            )}
-          >
-            マップ
-          </Button>
-        </Surface>
       </SafeAreaView>
     </View>
   );

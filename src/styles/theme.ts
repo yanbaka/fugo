@@ -41,8 +41,8 @@ export const STYLES = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: COLORS.lightBorder,
-    margin: 16,
-    padding: 24,
+    margin: 8,
+    padding: 8,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,

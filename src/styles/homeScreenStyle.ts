@@ -3,19 +3,8 @@ import { COLORS } from './theme';
 
 export const styles = StyleSheet.create({
   // 基本レイアウト
-  container: {
-    // MOTHER2_STYLES.containerを継承
-  },
   safeArea: {
     flex: 1,
-  },
-
-  // ヘッダー関連
-  headerSurface: {
-    // MOTHER2_STYLES.mainWindowを継承
-  },
-  headerTitle: {
-    // MOTHER2_STYLES.titleTextを継承
   },
   headerSubtitle: {
     fontSize: 16,
