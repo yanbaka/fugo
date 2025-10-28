@@ -1,5 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { View, ScrollView, RefreshControl } from 'react-native';
+import {
+  View,
+  ScrollView,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Text,
@@ -7,17 +12,39 @@ import {
   Button,
   IconButton,
   Surface,
+  Modal,
 } from 'react-native-paper';
 import { EncounterHistoryItem, Category } from '../types';
 import { COLORS, STYLES } from '../styles/theme';
 import { styles } from '../styles/homeScreenStyle';
 import { mockEncounterHistory } from '../data/sampleData';
 import { categories, CategoryWithIcon } from '../data/categories';
+import MapView, { Marker } from 'react-native-maps';
+
+const getLocationLatLng = (location: string) => {
+  // サンプル: location名から座標を返す（実際はAPI等で取得してください）
+  switch (location) {
+    case '渋谷区':
+      return { latitude: 35.658034, longitude: 139.701636 };
+    case '新宿区':
+      return { latitude: 35.693825, longitude: 139.703356 };
+    case '港区':
+      return { latitude: 35.6581, longitude: 139.7516 };
+    case '原宿':
+      return { latitude: 35.6702, longitude: 139.702 };
+    case '六本木':
+      return { latitude: 35.6628, longitude: 139.731 };
+    default:
+      return { latitude: 35.6895, longitude: 139.6917 }; // 東京駅
+  }
+};
 
 const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+  const [mapModalVisible, setMapModalVisible] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
 
   // サンプルデータ
   const [encounterHistory] =
@@ -99,6 +126,16 @@ const HomeScreen = () => {
   const clearAllFilters = () => {
     setSearchQuery('');
     setSelectedCategories([]);
+  };
+
+  const handleLocationPress = (location: string) => {
+    setSelectedLocation(location);
+    setMapModalVisible(true);
+  };
+
+  const closeMapModal = () => {
+    setMapModalVisible(false);
+    setSelectedLocation(null);
   };
 
   return (
@@ -245,9 +282,19 @@ const HomeScreen = () => {
                       <Text style={[STYLES.accentText, styles.userName]}>
                         {item.userName || `ユーザー${item.userId}`}
                       </Text>
-                      <Text style={[STYLES.subText, styles.location]}>
-                        📍 {item.location}
-                      </Text>
+                      <TouchableOpacity
+                        onPress={() => handleLocationPress(item.location)}
+                      >
+                        <Text
+                          style={[
+                            STYLES.subText,
+                            styles.location,
+                            { color: COLORS.textPrimary },
+                          ]}
+                        >
+                          📍 {item.location}
+                        </Text>
+                      </TouchableOpacity>
                     </View>
                     <Text style={[STYLES.smallText, styles.dateTime]}>
                       {formatDateTime(item.encounterDateTime)}
@@ -285,6 +332,49 @@ const HomeScreen = () => {
             </>
           )}
         </ScrollView>
+
+        {/* マップモーダル */}
+        <Modal visible={mapModalVisible} onDismiss={closeMapModal}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'rgba(0,0,0,0.3)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Surface
+              style={{
+                width: '90%',
+                height: 350,
+                borderRadius: 12,
+                overflow: 'hidden',
+              }}
+            >
+              <MapView
+                style={{ flex: 1 }}
+                initialRegion={{
+                  ...getLocationLatLng(selectedLocation || ''),
+                  latitudeDelta: 0.01,
+                  longitudeDelta: 0.01,
+                }}
+              >
+                {selectedLocation && (
+                  <Marker
+                    coordinate={getLocationLatLng(selectedLocation)}
+                    title={selectedLocation}
+                  />
+                )}
+              </MapView>
+              <Button
+                onPress={closeMapModal}
+                style={{ position: 'absolute', top: 8, right: 8 }}
+              >
+                閉じる
+              </Button>
+            </Surface>
+          </View>
+        </Modal>
       </SafeAreaView>
     </View>
   );
