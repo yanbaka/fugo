@@ -183,6 +183,8 @@ const HomeScreen = () => {
                     : COLORS.textPrimary
                 }
                 labelStyle={STYLES.smallText}
+                compact={true}
+                rippleColor={'transparent'}
               >
                 すべて
               </Button>
@@ -204,6 +206,8 @@ const HomeScreen = () => {
                         isSelected ? COLORS.textAccent : COLORS.textPrimary
                       }
                       labelStyle={STYLES.smallText}
+                      rippleColor={'transparent'}
+                      compact={true}
                     >
                       {categoryObj.name}
                     </Button>
@@ -279,7 +283,7 @@ const HomeScreen = () => {
                   {/* ユーザー情報と日時 */}
                   <View style={styles.messageHeader}>
                     <View style={styles.userInfo}>
-                      <Text style={[STYLES.accentText, styles.userName]}>
+                      <Text style={[styles.userName]}>
                         {item.userName || `ユーザー${item.userId}`}
                       </Text>
                       <TouchableOpacity
@@ -322,6 +326,7 @@ const HomeScreen = () => {
                           onPress={() => toggleCategory(category)}
                           textColor={COLORS.textPrimary}
                           labelStyle={STYLES.smallText}
+                          rippleColor={'transparent'}
                         >
                           {category}
                         </Button>
@@ -372,7 +377,8 @@ const HomeScreen = () => {
                 icon={'close-circle'}
                 onPress={closeMapModal}
                 textColor={COLORS.iconColor}
-                style={{ position: 'absolute', top: 4, right: 4 }}
+                style={{ position: 'absolute', top: 0, right: 0 }}
+                compact={true}
               >
                 閉じる
               </Button>

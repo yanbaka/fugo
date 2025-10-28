@@ -88,6 +88,7 @@ export const STYLES = StyleSheet.create({
     alignItems: 'center',
     shadowColor: '#000000',
     marginRight: 8,
+    paddingRight: 4,
   },
 
   // アクセントボタン（mabls色）
@@ -137,7 +138,7 @@ export const STYLES = StyleSheet.create({
 
   // メインテキスト
   mainText: {
-    fontSize: 16,
+    fontSize: 14,
     color: COLORS.textPrimary,
     fontFamily: 'System',
     lineHeight: 24,
@@ -158,6 +159,7 @@ export const STYLES = StyleSheet.create({
     // color: COLORS.textSecondary,
     fontFamily: 'System',
     fontWeight: '500',
+    borderRadius: 16,
   },
 
   // アクセントテキスト

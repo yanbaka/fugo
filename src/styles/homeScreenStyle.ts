@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
   categoryButtonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 4,
+    // paddingHorizontal: 4,
   },
   categoryCloseButton: {
     margin: 0,
@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
   messageHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     marginBottom: 8,
   },
   userInfo: {
@@ -89,6 +89,7 @@ export const styles = StyleSheet.create({
   },
   location: {
     fontSize: 12,
+    marginTop: 8,
   },
   dateTime: {
     textAlign: 'right',
