@@ -284,6 +284,7 @@ const HomeScreen = () => {
                       </Text>
                       <TouchableOpacity
                         onPress={() => handleLocationPress(item.location)}
+                        activeOpacity={0.7}
                       >
                         <Text
                           style={[
@@ -367,8 +368,11 @@ const HomeScreen = () => {
                 )}
               </MapView>
               <Button
+                mode="text"
+                icon={'close-circle'}
                 onPress={closeMapModal}
-                style={{ position: 'absolute', top: 8, right: 8 }}
+                textColor={COLORS.iconColor}
+                style={{ position: 'absolute', top: 4, right: 4 }}
               >
                 閉じる
               </Button>
