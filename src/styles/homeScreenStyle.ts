@@ -38,6 +38,9 @@ export const styles = StyleSheet.create({
   categoryScroll: {
     paddingRight: 8,
   },
+  chip: {
+    marginLeft: 6,
+  },
   selectedChip: {
     backgroundColor: COLORS.mablsPink,
     borderColor: COLORS.mablsPink,

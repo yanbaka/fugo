@@ -13,6 +13,8 @@ import {
   IconButton,
   Surface,
   Modal,
+  Chip,
+  Icon,
 } from 'react-native-paper';
 import { EncounterHistoryItem, Category } from '../types';
 import { COLORS, STYLES } from '../styles/theme';
@@ -167,61 +169,56 @@ const HomeScreen = () => {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.categoryScroll}
           >
-            <Surface
-              style={[
-                STYLES.button,
-                selectedCategories.length === 0 && styles.selectedChip,
-              ]}
-              elevation={0}
-            >
-              <Button
-                mode="text"
-                onPress={() => setSelectedCategories([])}
-                textColor={
+            <Chip
+              style={[selectedCategories.length === 0 && styles.selectedChip]}
+              textStyle={{
+                color:
                   selectedCategories.length === 0
                     ? COLORS.textAccent
-                    : COLORS.textPrimary
-                }
-                labelStyle={STYLES.smallText}
-                compact={true}
-                rippleColor={'transparent'}
-              >
-                すべて
-              </Button>
-            </Surface>
+                    : COLORS.textPrimary,
+                fontSize: 12,
+              }}
+              onPress={() => setSelectedCategories([])}
+              compact={true}
+              rippleColor={'transparent'}
+            >
+              すべて
+            </Chip>
             {categories.map((categoryObj: CategoryWithIcon) => {
               const isSelected = selectedCategories.includes(categoryObj.name);
               return (
-                <Surface
+                <Chip
                   key={categoryObj.name}
-                  style={[STYLES.button, isSelected && styles.selectedChip]}
-                  elevation={0}
+                  icon={() => (
+                    <Icon
+                      source={categoryObj.icon}
+                      size={16}
+                      color={isSelected ? COLORS.white : COLORS.textPrimary}
+                    />
+                  )}
+                  closeIcon={() => (
+                    <Icon
+                      source={'close'}
+                      size={14}
+                      color={isSelected ? COLORS.white : COLORS.textPrimary}
+                    />
+                  )}
+                  onClose={
+                    isSelected
+                      ? () => removeCategory(categoryObj.name)
+                      : undefined
+                  }
+                  onPress={() => toggleCategory(categoryObj.name)}
+                  textStyle={{
+                    color: isSelected ? COLORS.textAccent : COLORS.textPrimary,
+                    fontSize: 12,
+                  }}
+                  style={[styles.chip, isSelected && styles.selectedChip]}
+                  rippleColor={'transparent'}
+                  compact={true}
                 >
-                  <View style={styles.categoryButtonContainer}>
-                    <Button
-                      mode="text"
-                      icon={categoryObj.icon}
-                      onPress={() => toggleCategory(categoryObj.name)}
-                      textColor={
-                        isSelected ? COLORS.textAccent : COLORS.textPrimary
-                      }
-                      labelStyle={STYLES.smallText}
-                      rippleColor={'transparent'}
-                      compact={true}
-                    >
-                      {categoryObj.name}
-                    </Button>
-                    {isSelected && (
-                      <IconButton
-                        icon="close"
-                        size={12}
-                        iconColor={COLORS.textAccent}
-                        onPress={() => removeCategory(categoryObj.name)}
-                        style={styles.categoryCloseButton}
-                      />
-                    )}
-                  </View>
-                </Surface>
+                  {categoryObj.name}
+                </Chip>
               );
             })}
           </ScrollView>
@@ -270,7 +267,7 @@ const HomeScreen = () => {
                 elevation={0}
               >
                 <Text style={[STYLES.accentText, styles.resultCountText]}>
-                  {filteredHistory.length}件の記録が見つかりました
+                  {filteredHistory.length}件のすれ違い記録が見つかりました
                 </Text>
               </Surface>
 
