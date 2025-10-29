@@ -315,14 +315,16 @@ const HomeScreen = () => {
 
                   {/* カテゴリ */}
                   <View style={styles.categoryTagContainer}>
-                    {item.categories.map((category) => (
+                    {item.categories.map((category, index) => (
                       <Chip
+                        key={index}
                         onPress={() => toggleCategory(category)}
                         textStyle={{
-                          color: COLORS.textPrimary,
-                          fontSize: 12,
+                          color: COLORS.mablsOrange,
+                          fontSize: 10,
                         }}
-                        style={[styles.chip]}
+                        style={[styles.chipCard]}
+                        compact={true}
                       >
                         {category}
                       </Chip>

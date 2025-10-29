@@ -42,6 +42,10 @@ export const styles = StyleSheet.create({
     marginRight: 6,
     backgroundColor: COLORS.lightGray,
   },
+  chipCard: {
+    marginRight: 6,
+    backgroundColor: '#fff3e0',
+  },
   selectedChip: {
     backgroundColor: COLORS.mablsPink,
     borderColor: COLORS.mablsPink,

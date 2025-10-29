@@ -14,6 +14,7 @@ export const COLORS = {
   mablsBlue: '#3b82f6', // ブルー
   mablsAccent: '#8b5cf6', // ライトパープル
   mablsPink: '#ec4899', // 渋谷マブルス風ピンク
+  mablsOrange: '#fb923c', // 渋谷マブルス風オレンジを追加
 
   // テキストカラー
   textPrimary: '#1f2937', // ダークグレー
