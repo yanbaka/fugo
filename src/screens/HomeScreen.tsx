@@ -170,7 +170,10 @@ const HomeScreen = () => {
             contentContainerStyle={styles.categoryScroll}
           >
             <Chip
-              style={[selectedCategories.length === 0 && styles.selectedChip]}
+              style={[
+                styles.chip,
+                selectedCategories.length === 0 && styles.selectedChip,
+              ]}
               textStyle={{
                 color:
                   selectedCategories.length === 0
@@ -313,21 +316,16 @@ const HomeScreen = () => {
                   {/* カテゴリ */}
                   <View style={styles.categoryTagContainer}>
                     {item.categories.map((category) => (
-                      <Surface
-                        key={category}
-                        style={[STYLES.tag]}
-                        elevation={0}
+                      <Chip
+                        onPress={() => toggleCategory(category)}
+                        textStyle={{
+                          color: COLORS.textPrimary,
+                          fontSize: 12,
+                        }}
+                        style={[styles.chip]}
                       >
-                        <Button
-                          mode="text"
-                          onPress={() => toggleCategory(category)}
-                          textColor={COLORS.textPrimary}
-                          labelStyle={STYLES.smallText}
-                          rippleColor={'transparent'}
-                        >
-                          {category}
-                        </Button>
-                      </Surface>
+                        {category}
+                      </Chip>
                     ))}
                   </View>
                 </Surface>

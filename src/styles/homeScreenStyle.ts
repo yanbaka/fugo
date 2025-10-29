@@ -39,7 +39,8 @@ export const styles = StyleSheet.create({
     paddingRight: 8,
   },
   chip: {
-    marginLeft: 6,
+    marginRight: 6,
+    backgroundColor: COLORS.lightGray,
   },
   selectedChip: {
     backgroundColor: COLORS.mablsPink,
