@@ -7,7 +7,8 @@
     "userInterfaceStyle": "light",
     "splash": {
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "image": "./assets/splashscreen_logo.png"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -43,8 +44,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "9922ffcb-988e-4712-9505-617fd6340883"
+        "projectId": "280284b9-557e-49ab-8aca-c22e6d4d6b77"
       }
-    }
+    },
+    "owner": "fl_sekiguchi"
   }
 }
